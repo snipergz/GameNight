@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import { Link } from 'react-router-dom';
+import {HiChevronDoubleUp, HiOutlineViewList } from 'react-icons/hi'
 
 const Navbar = () => {
     const [nav, setNav] = useState(false);
@@ -22,7 +23,7 @@ const Navbar = () => {
                 <button className='hover:text-neonBlue'>Sign Up</button>
             </div>
             <div className='md:hidden mr-4 justify-start' onClick={handleClick}>
-                {!nav ? <>OPEN</>: <>CLOSE</>}
+                {!nav ? <HiOutlineViewList/>: <HiChevronDoubleUp/>}
             </div>
         </div>
 
