@@ -1,6 +1,5 @@
 import React from 'react'
-import gameNight from '../assets/game-night-logo.png'
-import gameCouch from '../assets/gameCouch.png'
+import gameCouch from '../../assets/gameCouch.png'
 
 const Hero = () => {
   return (
