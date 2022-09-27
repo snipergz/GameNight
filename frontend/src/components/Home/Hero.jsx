@@ -13,13 +13,15 @@ const Hero = () => {
                 <span className="text-neonBlue my-4 leading 3 outline-none drop-shadow-titleRight">
                   Night
                 </span>
-              </h1>
+              </h1>             
+              <h2 className="text-white text-xl lg:text-2xl my-4">
+              An Anywhere and Anytime Solution that brings life to small group environments              </h2>
               <h2 className="text-white text-xl lg:text-3xl my-4">
                 Are you ready to have some fun?
               </h2>
               <div className='flex flex-row gap-5 w-full justify-center xl:justify-start'>
                 <a className='bg-darkPurple text-white py-3 px-6 min-w-[145px] border border-navy rounded' href="#" >Let's Play</a>
-                <a className='bg-white text-darkPurple py-3 px-6 min-w-[145px] border border-darkPurple rounded' href="#">Learn More</a>
+                <a className='bg-white text-darkPurple py-3 px-6 min-w-[145px] border border-darkPurple rounded' href="#about">Learn More</a>
               </div>
 
             </div>
