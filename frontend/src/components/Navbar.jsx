@@ -11,7 +11,7 @@ const Navbar = () => {
             <div className='flex items-center'>
             <Link className='text-3xl font-bold mr-4 sm:text-4xl' to='/'>GameNight</Link>
                 <ul className='hidden md:flex'>
-                    <Link to='/mafia'>Mafia</Link>
+                    <Link className='mr-2' to='/mafia'>Mafia</Link>
                     <Link to='/taboo'>Taboo</Link>
                 </ul>  
             </div>
