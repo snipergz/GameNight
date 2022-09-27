@@ -20,7 +20,7 @@ const Hero = () => {
                 Are you ready to have some fun?
               </h2>
               <div className='flex flex-row gap-5 w-full justify-center xl:justify-start'>
-                <a className='bg-darkPurple text-white py-3 px-6 min-w-[145px] border border-navy rounded' href="#" >Let's Play</a>
+                <a className='bg-darkPurple text-white py-3 px-6 min-w-[145px] border border-navy rounded' href="#games" >Let's Play 👇</a>
                 <a className='bg-white text-darkPurple py-3 px-6 min-w-[145px] border border-darkPurple rounded' href="#about">Learn More</a>
               </div>
 

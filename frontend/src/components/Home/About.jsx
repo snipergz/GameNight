@@ -3,7 +3,7 @@ import React from 'react'
 const About = () => {
   return (
     <>
-    <section id='about' className='container mx-auto p-4 h-[500px]'>
+    <section id='about' className='container mx-auto p-4 h-auto'>
         <div className='grid md:grid-cols-2 max-w-[1240px] m-auto text-white'>
             <div className='flex flex-col justify-center items-center xl:items-start w-full px-2 py-2 mb-5 sm:m-none'>
               <h1 className='text-3xl lg:text-4xl font-navFontRS'>What is GameNight?</h1>
