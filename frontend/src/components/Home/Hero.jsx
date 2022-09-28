@@ -1,5 +1,5 @@
 import React from 'react'
-import gameCouch from '../../assets/gameCouch.png'
+import gameCouch from '../../assets/Home/gameCouch.png'
 
 const Hero = () => {
   return (
