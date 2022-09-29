@@ -4,7 +4,7 @@ import mafiaCard1 from '../../assets/Mafia/mafia-card-1.jpg'
 
 const Games = () => {
   return (
-    <section id='games' className='container mx-auto p-4 h-[500px] my-auto md:mt-20'>
+    <section id='games' className='container mx-auto p-4 my-auto md:mt-20'>
         <h1 className='text-4xl p-2 text-white'>Featured Games:</h1>
         <div className='grid md:grid-cols-3 max-w-[1240px] m-auto text-dark gap-8 sm:gap-2'>
             <div className='flex flex-col bg-white rounded-lg shadow-lg bg-white max-w-sm'>
