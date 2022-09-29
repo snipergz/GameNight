@@ -49,5 +49,7 @@ module.exports = {
       mafia:["0 0 50px #c9291a"]
     }
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/aspect-ratio'),
+  ],
 };
