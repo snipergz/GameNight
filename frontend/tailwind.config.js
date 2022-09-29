@@ -40,11 +40,13 @@ module.exports = {
       neonPink: "#EE00FF",
       neonBlue: "#00A2FF",
       navy: "rgb(17 24 39);",
-      darkPurple: "#9600ff"
+      darkPurple: "#9600ff",
+      mafiaRed: "#c9291a"
     },
     dropShadow: {
       titleLeft: ["0 0 50px rgb(238,0,255)", "0 0 4px rgb(0,162,255)"],
       titleRight: ["0 0 50px rgb(0, 162, 255)", "0 0 4px rgb(238, 0, 255)"],
+      mafia:["0 0 50px #c9291a"]
     }
   },
   plugins: [],
