@@ -7,7 +7,7 @@ const Games = () => {
     <section id='games' className='container mx-auto p-4 my-auto md:mt-20'>
         <h1 className='text-4xl p-2 text-white'>Featured Games:</h1>
         <div className='grid md:grid-cols-3 max-w-[1240px] m-auto text-dark gap-8 sm:gap-2'>
-            <div className='flex flex-col bg-white rounded-lg shadow-lg bg-white max-w-sm'>
+            <div className='flex flex-col rounded-lg shadow-lg bg-white max-w-sm'>
                 <img src={mafiaCard1} alt=''/>
                 <div className='p-4'>
                     <h3 className='text-2xl'>Mafia</h3>
@@ -15,7 +15,7 @@ const Games = () => {
                     <Link className='block bg-darkPurple text-white py-3 px-6 w-[50%] text-center mx-auto border border-navy rounded' to='/mafia'>Play Mafia</Link>
                 </div>
             </div>
-            <div className='flex flex-col bg-white rounded-lg shadow-lg bg-white max-w-sm'>
+            <div className='flex flex-col rounded-lg shadow-lg bg-white max-w-sm'>
                 <img src={mafiaCard1} alt=''/>
                 <div className='p-4'>
                     <h3 className='text-2xl'>Taboo</h3>
@@ -23,7 +23,7 @@ const Games = () => {
                     <Link className='block bg-darkPurple text-white py-3 px-6 w-[50%] text-center mx-auto border border-navy rounded' to='/taboo'>Play Taboo</Link>
                 </div>
             </div>
-            <div className='flex flex-col bg-white rounded-lg shadow-lg bg-white max-w-sm'>
+            <div className='flex flex-col rounded-lg shadow-lg bg-white max-w-sm'>
                 <img src={mafiaCard1} alt=''/>
                 <div className='p-4'>
                     <h3 className='text-2xl'>Mafia</h3>
