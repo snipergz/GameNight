@@ -3,6 +3,7 @@ import Navbar from '../components/Navbar'
 import Hero from '../components/Mafia/Hero'
 import About from '../components/Mafia/About'
 import Characters from '../components/Mafia/Characters'
+import Rules from '../components/Mafia/Rules'
 
 const Mafia = () => {
   return (
@@ -11,6 +12,7 @@ const Mafia = () => {
         <Hero/>
         <About/>
         <Characters/>
+        <Rules/>
     </>
   )
 }
