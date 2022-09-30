@@ -7,7 +7,7 @@ const Navbar = () => {
     const handleClick = () => setNav(!nav);
 
   return (
-    <div className='w-screen text-white h-[50px] bg-navy z-10 fixed drop-shadow-lg'>
+    <div className='w-screen text-white h-[50px] bg-navy z-10 top-0 fixed drop-shadow-lg'>
         <div className='px-2 flex justify-between items-center w-full h-full'>
             <div className='flex items-center'>
             <Link className='font-bold mr-4 hidden sm:block' to='/'>
