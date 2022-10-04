@@ -6,7 +6,6 @@ const cors = require('cors');
 
 PORT=8080;
 
-// connect to db
 let db;
 (async () => {
 	db = await open({
@@ -20,25 +19,28 @@ app.use(express.static(path.join(__dirname, 'static')));
 app.use(express.json());
 app.use(cors());
 
-///////////////////////////////////////
+let gid = 'GAME123';
+let cre = 'CREATE TABLE ';
+let ate = ' ( gameId , player1Id , player2Id , player1 VARCHAR(10 ) , player2 VARCHAR(10 ))';
+let sel = 'select * from ';
+let res1 = cre.concat(gid);
+let res2 = res1.concat(ate);
+let res3 = sel.concat(gid);
+
 var sortString = function(str) {
     return str.split('').sort().join('');
 };
-///////////////////////////////////////
 
-app.get('/data', async (req, res) => {
-	let courses = await db.all('select * from course');
-	const instructors = await db.all('select * from instructor');
-	const sections = await db.all('select * from section');
-	courses = courses.map(course => ({...course, sections: sections.filter(section => section.course_id === course.id)}));
-	console.log(`bingo: `);
-	res.json({courses, instructors});
+app.get('/createDefaultGame', async (req, res) => {
+	const result = await db.run(res2);
+	let gameString = await db.all(res3);
+	console.log('creating table in DB: GAME123');
+	console.log(gameString);
+	res.json({});
 });
 
 app.get('/gameState', async (req, res) => {
 	let gameString = await db.all('select game from GAME123');
-	//courses = courses.map(course => ({...course, sections: sections.filter(section => section.course_id === course.id)}));
-	//console.log(`sent game string: ${gamestring}`);
 	console.log('result.data: %o', gameString);
 	res.json(gameString);
 });

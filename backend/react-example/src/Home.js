@@ -41,6 +41,19 @@ function Home() {
   
     </tr>
 
+    <tr>
+    <button type="button"><a href="/Join/game123">Join Game</a></button>
+    <form>
+      <label>Enter your name:
+        <input
+          type="text" 
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+      </label>
+    </form>
+    </tr>
+
     </div>
 
   );

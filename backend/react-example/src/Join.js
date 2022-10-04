@@ -23,13 +23,13 @@ function Join() {
     </div>
 
     <div className="col-auto">
-          x  x  x
+          -  x  o
     </div>
     <div className="col-auto">
-          o  o  o
+          -  o  -
     </div>
     <div className="col-auto">
-          x  x  x
+          -  o  -
     </div>
 
     </div>
