@@ -3,7 +3,10 @@ const dotenv = require('dotenv').config();
 const path = require('path');
 const port = process.env.PORT || 8080;
 const static_dir = path.join(__dirname, 'static');
-const mongoose = require('mongoose');
+const connectDB = require('./config/db')
+
+// Connecting to MongoDB
+connectDB()
 
 // express and middleware setup
 const app = express();
