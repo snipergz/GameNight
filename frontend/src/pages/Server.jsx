@@ -1,12 +1,12 @@
 import React from 'react'
+import Navbar from '../components/Navbar'
+import ServerComponent from '../components/ServerComponent'
 
-const Server = () => {
+const Server = ({gameName}) => {
   return (
     <>
-        <section className='container md:max-w-[1240px] text-white mx-auto mt-8 p-4'>
-            <div>Create a Server</div>
-            <div>Join a Server</div>
-        </section>
+        <Navbar/>
+        <ServerComponent gameName={gameName}/>
     </>
   )
 }
