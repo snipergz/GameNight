@@ -37,22 +37,16 @@ function Home() {
     </tr>
 
     <tr>
-    <button type="button"><a href="/Join/game123">Join Game</a></button>
-  
+      <button type="button"><a href="/Join/game123">Join Game</a></button>
     </tr>
-
-    <tr>
-    <button type="button"><a href="/Join/game123">Join Game</a></button>
-    <form>
-      <label>Enter your name:
-        <input
-          type="text" 
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-      </label>
+    
+    <form action="/Join/:" method="get">
+    <input type="text" placeholder='Join Game with Game ID' 
+         name="gameId" id="gameId" />
     </form>
-    </tr>
+
+
+    
 
     </div>
 
