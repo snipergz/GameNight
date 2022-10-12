@@ -3,7 +3,7 @@ import gameCouch from '../../assets/Home/gameCouch.png'
 
 const Hero = () => {
   return (
-    <div className='w-full h-screen flex flex-col justify-between'>
+    <div className='w-full h-screen flex flex-col justify-between mt-[65px] md:mt-0'>
         <div className='grid md:grid-cols-2 max-w-[1240px] m-auto'>
             <div className='flex flex-col justify-center items-center xl:items-start w-full px-2 py-2 mb-5 sm:m-none'>
               <h1 className='text-5xl lg:text-6xl font-navFontRS'>
@@ -26,7 +26,7 @@ const Hero = () => {
 
             </div>
             <div className=''>
-              <img className='w-[75%] mx-auto border border-x-neonPink border-y-neonBlue rounded-xl' src={gameCouch} alt="" />
+              <img className='w-[90%] md:w-[75%] mx-auto border border-x-neonPink border-y-neonBlue rounded-xl' src={gameCouch} alt="" />
             </div>
         </div>
     </div>
