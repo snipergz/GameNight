@@ -39,4 +39,4 @@ const deleteServer = asyncHandler(async (req, res) => {
 
 module.exports = {
     getServer, createServer, deleteServer
-}
+} 
