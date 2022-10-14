@@ -1,13 +1,31 @@
 const asyncHandler = require('express-async-handler')
 
-const gameServer = require('../models/GameServerModel')
+const gameServer = require('../models/MafiaServerModel')
+const mafiaPlayer = require('../models/MafiaPlayerModel')
 
+// General Functions
 function generateServerCode(){
     // Generate a random UUID
     // Trim it down to 6 digits maybe use modulus
     // return code that will be used in createServer
     return 1234
 }
+
+// Mafia Player CRUD METHODS
+
+// @desc    Get Player with playerID and serverID
+// @route   Get /gamenight/server/mafia/player/:serverID/:playerID
+// @access  Public
+
+// @desc    Create Player, intialize with a 'civilian' role and when the game starts, assign roles
+// @route   Post /gamenight/server/mafia/player/:serverID
+// @access  Public
+
+// @desc    Delete Player
+// @route   Delete /gamenight/server/mafia/player/:serverID/:playerID
+// @access  Public
+
+// Game Server CRUD METHODS
 
 // @desc    Get Server with serverCode
 // @route   Get /gamenight/server/mafia/:serverID
@@ -32,8 +50,8 @@ const createServer = asyncHandler(async (req, res) => {
     try {
         console.log(`Creating Game Server for the game: ${req.body.game}...`)
         const server = await gameServer.create({
-            game: req.body.game,
             serverCode: generateServerCode(),
+            players: [],
             status: true
         })
         res.status(200).json(server)

@@ -7,4 +7,6 @@ router.route('/mafia/:serverID').get(getServer).delete(deleteServer)
 
 router.post('/mafia', createServer)
 
+// Mafia Game Player Routes
+
 module.exports = router

@@ -5,7 +5,7 @@ const MafiaPlayerSchema = mongoose.Schema({
         type: String,
         required: [true, 'You must have access to a server'],
     },
-    slayerID: {
+    playerID: {
         type: String,
         required: [true, 'You must have a playerID to play'],
     },
