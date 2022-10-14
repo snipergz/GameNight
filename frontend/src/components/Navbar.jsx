@@ -8,17 +8,10 @@ const Navbar = () => {
 
   return (
     <>
-      <div
-        className="md:hidden mr-4 p-2 pb-0 justify-start text-white"
-        onClick={handleClick}
-      >
-        {!nav ? <HiOutlineViewList /> : <HiChevronDoubleUp />}
-      </div>
-
       <ul
         className={
           !nav
-            ? "invisible lg:visible text-white p-2 flex flex-row justify-between"
+            ? "invisible md:visible text-white p-2 flex flex-row justify-between"
             : "text-white flex flex-col md:gap-1 p-2 "
         }
       >
@@ -28,7 +21,13 @@ const Navbar = () => {
             <span className="text-neonBlue text-xl">Night</span>
           </Link>
         </div>
-        <div className="md:pr-4 flex flex-col md:inline-block fixed md:relative">
+        <div className="md:pr-4 flex flex-col md:inline-block top-0 fixed md:relative bg-navy w-full md:w-auto md:bg-transparent">
+          <div
+            className="visible md:hidden mr-4 p-2 pb-0 pl-0 justify-start text-white"
+            onClick={handleClick}
+          >
+            {!nav ? <HiOutlineViewList /> : <HiChevronDoubleUp />}
+          </div>
           <Link to="/home" className="hover:text-neonBlue md:pr-3">
             Home
           </Link>
