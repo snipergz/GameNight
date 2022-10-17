@@ -8,7 +8,7 @@ function generateServerCode(){
     // Generate a random UUID
     // Trim it down to 6 digits maybe use modulus
     // return code that will be used in createServer
-    return 1234
+    return Math.floor(Math.random() * 1010000);
 }
 
 // Mafia Player CRUD METHODS
@@ -44,7 +44,7 @@ const getServer = asyncHandler(async (req, res) => {
 })
 
 // @desc    Create Server 
-// @route   Post /gamenight/mafia
+// @route   Post /gamenight/server/mafia
 // @access  Public
 const createServer = asyncHandler(async (req, res) => {
     try {
