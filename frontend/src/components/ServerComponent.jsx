@@ -1,4 +1,5 @@
-import React, {useState} from 'react'
+import {useState} from 'react'
+import { Link } from 'react-router-dom';
 import mafiaHouse from '../assets/Mafia/mafia-house.jpg'
 import JoinForm from './JoinForm';
 
@@ -6,8 +7,6 @@ import JoinForm from './JoinForm';
 const ServerComponent = ({gameName}) => {
   const [clickJoinServer, setJoin] = useState(false);
   const handleJoinClick = () => setJoin(!clickJoinServer);
-  const [clickCreateServer, setCreate] = useState(false);
-  const handleCreateClick = () => setCreate(!clickCreateServer);
 
   return (
     <div className='w-full h-screen flex flex-col justify-between mt-28 md:mt-4'>
@@ -18,13 +17,8 @@ const ServerComponent = ({gameName}) => {
               {clickJoinServer ? 
                 <JoinForm handleJoinClick={handleJoinClick}/>
                 :
-                clickCreateServer ?
                 <>
-                  <p className='text-white'>Your Server Code is 1234</p>
-                </>
-                :
-                <>
-                  <div className='bg-mafiaRed text-white py-3 px-6 min-w-[145px] border border-navy rounded' onClick={handleCreateClick}>Create a {gameName} Server</div>
+                  <Link to='/mafia/server/create' className='bg-mafiaRed text-white py-3 px-6 min-w-[145px] border border-navy rounded'>Create a {gameName} Server </Link>
                   <div className='bg-white text-mafiaRed py-3 px-6 min-w-[145px] border border-mafiaRed rounded' onClick={handleJoinClick}>Join a {gameName} Server</div>
                 </>
               }
