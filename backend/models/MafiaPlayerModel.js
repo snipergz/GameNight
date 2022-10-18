@@ -1,23 +1,23 @@
 const mongoose = require("mongoose")
 
-const MafiaSchema = mongoose.Schema({
-    ServerID: {
+const MafiaPlayerSchema = mongoose.Schema({
+    serverID: {
         type: String,
         required: [true, 'You must have access to a server'],
     },
-    PlayerID: {
+    playerID: {
         type: String,
         required: [true, 'You must have a playerID to play'],
     },
-    Role: {
+    role: {
         type: String,
         required: [true, 'You must have a role assigned to you to play'],
     },
-    Name: {
+    name: {
         type: String,
         required: [true, 'Please add a text value'],
     },
-    Status: {
+    status: {
         type: Boolean,
         required: [true],
     },
@@ -27,4 +27,4 @@ const MafiaSchema = mongoose.Schema({
     },
 })
 
-module.exports = mongoose.model('Mafia', MafiaSchema)
+module.exports = mongoose.model('Mafia', MafiaPlayerSchema)
