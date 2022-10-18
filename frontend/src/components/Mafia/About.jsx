@@ -3,7 +3,7 @@ import React from 'react'
 const About = () => {
   return (
     <>
-    <section id='about' className='container mx-auto p-4 h-auto max-w-full'>
+    <section id='mafia-about' className='container mx-auto p-4 h-auto max-w-full'>
       <h1 className='text-white text-center text-3xl lg:text-4xl font-navFontRS mb-4'>What is <span className='text-mafiaRed'>Mafia</span> and How do You Play?</h1>
         <div className='grid xl:grid-cols-2 gap-8 max-w-[1240px] m-auto text-white'>
             <div className='order-2 xl:order-1 flex flex-col justify-center items-center xl:items-start w-full px-2 py-2 mb-5 sm:m-none'>
