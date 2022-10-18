@@ -21,9 +21,9 @@ const Navbar = () => {
             <span className="text-neonBlue text-xl">Night</span>
           </Link>
         </div>
-        <div className="md:pr-4 flex flex-col md:inline-block top-0 fixed md:relative bg-navy w-full md:w-auto md:bg-transparent">
+        <div className="md:pr-4 flex flex-col md:inline-block top-0 fixed  md:relative bg-navy w-full md:w-auto md:bg-transparent z-10">
           <div
-            className="visible md:hidden mr-4 p-2 pb-0 pl-0 justify-start text-white"
+            className="visible md:hidden mr-4 p-2 pb-0 pl-0 justify-start text-white "
             onClick={handleClick}
           >
             {!nav ? <HiOutlineViewList /> : <HiChevronDoubleUp />}
