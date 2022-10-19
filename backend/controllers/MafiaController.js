@@ -16,14 +16,60 @@ function generateServerCode(){
 // @desc    Get Player with playerID and serverID
 // @route   Get /gamenight/server/mafia/player/:serverID/:playerID
 // @access  Public
+const getPlayer = asyncHandler(async (req, res) => {
+    try{
+        console.log(`Finding player with PlayerID: ${req.params.serverID.playerID}...`)
+        const player = await mafiaPlayer.findOne({playerID:req.params.serverID.players}) 
+        console.log(player)
+        res.status(200)
+    }
+    catch ( error ){
+        console.log(error)
+        res.status(400)
+        throw new Error('Player not found')
+    }
+})
 
 // @desc    Create Player, intialize with a 'civilian' role and when the game starts, assign roles
 // @route   Post /gamenight/server/mafia/player/:serverID
 // @access  Public
+const createPlayer = asyncHandler(async (req, res) => {
+    try{
+        console.log(`Creating Player for Server: ${req.body.game}...`)
+        const player = await gameServer.player.create({
+            serverID: req.params.serverID,
+            playerID: process.env.playerID,
+            role: 'civilian',
+            name: process.env.name,
+            status: true,
+            isAlive: false,
+        })
+        res.status(200)
+        console.log(player)
+    }
+    catch ( error ){
+        console.log(error)
+        res.status(400)
+        throw new Error('Player cannot be created')
+    }
+})
+
 
 // @desc    Delete Player
 // @route   Delete /gamenight/server/mafia/player/:serverID/:playerID
 // @access  Public
+const deletePlayer = asyncHandler(async (req, res) => {
+    try {
+        const player = await gameServer.findOne({playerID:req.params.serverID.players})
+        console.log(player)
+        res.status(200).json({message: `Deleted Player with PlayerID: ${req.params.playerID}` })
+    } catch (error) {
+        res.status(400)
+        throw new Error('Player not found')
+    }
+})
+
+
 
 // Game Server CRUD METHODS
 
@@ -68,7 +114,7 @@ const createServer = asyncHandler(async (req, res) => {
 // @access  Public
 const deleteServer = asyncHandler(async (req, res) => {
     try {
-        const server = await gameServer.findOne({serverID:req.params.ServerID})
+        const server = await gameServer.findOne({serverID:req.params.serverID})
         console.log(server)
         res.status(200).json({message: `Deleted Server with server code: ${req.params.serverID}` })
     } catch (error) {
@@ -78,5 +124,5 @@ const deleteServer = asyncHandler(async (req, res) => {
 })
 
 module.exports = {
-    getServer, createServer, deleteServer
+    getServer, createServer, deleteServer, getPlayer, createPlayer, deletePlayer
 } 
