@@ -51,11 +51,9 @@ const createPlayer = asyncHandler(async (req, res) => {
         })
 
         const players = plrs.players.concat(player)
-        console.log(`player: ${players}`)
-        
+        //console.log(`player: ${players}`)
         const server = await gameServer.updateOne({serverCode:req.params.serverID}, {$set:{players:players}})
-        console.log(`server: ${server}`)
-
+        //console.log(`server: ${server}`)
         res.status(200).json(player)
         console.log(player)
     }
@@ -92,11 +90,11 @@ const getServer = asyncHandler(async (req, res) => {
     try {
         console.log(`Finding Server with ServerID: ${req.params.ServerID}...`)
         //for the this to actaull work proper
-        //const server = await gameServer.findOne({serverID:req.params.ServerID})
+        const server = await gameServer.findOne({serverID:req.params.ServerID})
         //return all the players
         //const server = await mafiaPlayer.find()
         //return all the gameServers
-        const server = await gameServer.find()
+        //const server = await gameServer.find()
         console.log(server)
         res.status(200).json(server)
     } catch (error) {
@@ -126,22 +124,6 @@ const createServer = asyncHandler(async (req, res) => {
     }
 })
 
-// @desc    Update Players into Server with serverCode
-// @route   Update /gamenight/server/mafia/:serverID
-// @access  Public
-const addPlayersToServer = asyncHandler(async (req, res) => {
-    try {
-        const players = await mafiaPlayer.find({serverCode:req.params.serverID})
-        const server = await gameServer.findOneAndUpdate({serverCode:req.params.serverID}, {players:players})
-        //const server = await mafiaPlayer.remove()
-        console.log(server)
-        res.status(200).json({message: `Updated Server with players: ${players}` })
-    } catch (error) {
-        res.status(400)
-        throw new Error('Server not found')
-    }
-})
-
 // @desc    Delete Server with serverCode
 // @route   Delete /gamenight/server/mafia/:serverID
 // @access  Public
@@ -158,5 +140,5 @@ const deleteServer = asyncHandler(async (req, res) => {
 })
 
 module.exports = {
-    getServer, createServer, addPlayersToServer, deleteServer, getPlayer, createPlayer, deletePlayer
+    getServer, createServer, deleteServer, getPlayer, createPlayer, deletePlayer
 } 
