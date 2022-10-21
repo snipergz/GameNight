@@ -1,9 +1,9 @@
 const express = require('express')
 const router = express.Router()
-const { getServer, createServer, deleteServer, addPlayersToServer, getPlayer, createPlayer, deletePlayer } = require('../controllers/MafiaController')
+const { getServer, createServer, deleteServer, getPlayer, createPlayer, deletePlayer } = require('../controllers/MafiaController')
 
 // Mafia Game Server Routes
-router.route('/mafia/:serverID').get(getServer).delete(deleteServer).put(addPlayersToServer)
+router.route('/mafia/:serverID').get(getServer).delete(deleteServer)
 
 router.post('/mafia', createServer)
 
