@@ -11,6 +11,17 @@ function generateServerCode(){
     return Math.floor(Math.random() * 1010000);
 }
 
+function generatePlayerID(){
+    // Generate a random playerID
+    //CAPS, 0-9
+    const characters ='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    let result = ''
+    for ( let i = 0; i < 6; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * 36));
+    }
+    return result
+}
+
 // Mafia Player CRUD METHODS
 
 // @desc    Get Player with playerID and serverID
@@ -39,22 +50,18 @@ const createPlayer = asyncHandler(async (req, res) => {
         console.log(`Creating Player for Server: ${req.body}...`)
 
         const plrs = await gameServer.findOne({serverCode:req.params.serverID})
-        console.log(`plrs: ${plrs}`)
-
         const player = await mafiaPlayer.create({
             serverID: req.params.serverID,
-            playerID: process.env.playerID,
+            playerID: generatePlayerID(),
             role: 'civilian',
-            name: process.env.name,
+            name: req.body.name,
             status: true,
             isAlive: false,
         })
 
         const players = plrs.players.concat(player)
-        //console.log(`player: ${players}`)
         const server = await gameServer.updateOne({serverCode:req.params.serverID}, {$set:{players:players}})
-        //console.log(`server: ${server}`)
-        res.status(200).json(player)
+        res.status(200).json({message: `Created player: ${player}` })
         console.log(player)
     }
     catch ( error ){
@@ -71,10 +78,8 @@ const deletePlayer = asyncHandler(async (req, res) => {
     try {
         const plrs = await gameServer.findOne({serverCode:req.params.serverID})
         const players = plrs.players.filter(plr => plr.playerID != req.params.playerID)
-        console.log(`player: ${players}`)
         const server = await gameServer.updateOne({serverCode:req.params.serverID}, {$set:{players:players}})
-        console.log(`server: ${server}`)
-        res.status(200).json(server)
+        res.status(200).json({message: `Deleted player with playerID: ${req.params.playerID}` })
     } catch (error) {
         res.status(400)
         throw new Error('Player not found')
@@ -91,9 +96,7 @@ const getServer = asyncHandler(async (req, res) => {
         console.log(`Finding Server with ServerID: ${req.params.ServerID}...`)
         //for the this to actaull work proper
         const server = await gameServer.findOne({serverID:req.params.ServerID})
-        //return all the players
-        //const server = await mafiaPlayer.find()
-        //return all the gameServers
+        //return all the gameServers for TS
         //const server = await gameServer.find()
         console.log(server)
         res.status(200).json(server)
