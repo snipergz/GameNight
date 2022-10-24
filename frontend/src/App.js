@@ -16,7 +16,7 @@ function App() {
           <Route path='/mafia' element={<Mafia/>}/>
           <Route path='/taboo' element={<Taboo/>}/>
           <Route path='/mafia/server' element={<Server gameName={"Mafia"}/>}/>
-          <Route path='/mafia/server/create' element={<MafiaServer/>}/>
+          <Route path='/mafia/server/play' element={<MafiaServer/>}/>
         </Routes>
       </div>
     </Router>

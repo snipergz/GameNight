@@ -1,8 +1,8 @@
 import {useState, useEffect} from 'react'
-import axios from 'axios'
 
 const MafiaServer = () => {
   const [loading, setLoading] = useState(true);
+  const [players, setPlayers] = useState([]);
   const [server, setServer] = useState([]);
   const [error, setError] = useState(null);
   console.log("Creating Mafia Server...")
@@ -10,13 +10,17 @@ const MafiaServer = () => {
   useEffect(() => {
     const fetch = async() => {
       try{
-        console.log("Sending Ajax Call...");
-        setLoading(true)
-        const result = await axios.post('http://localhost:8080/gamenight/server/mafia')
-        console.log("Ajax received...");
-        setLoading(false)
-        setServer(result.data);
-        console.log(result.data);
+        const localServer = localStorage.getItem('server')
+        if(localServer){
+          setLoading(false)
+          const JSONServer = JSON.parse(localServer)
+          console.log(JSONServer.data)
+          setServer(JSONServer.data)
+          setPlayers(JSONServer.data.players)
+        } else {
+          setLoading(false)
+          setError("No local server please go back and press 'Create a Game'")
+        }
       }catch(error){
         setError("Unable to create server, please try again later.")
       }
@@ -35,7 +39,13 @@ const MafiaServer = () => {
                 ?
                 <h2>Error, {error}</h2>
                 :   
-                <p>Your Server Code is: {server.serverCode}</p>
+                <div>
+                  <p className='mt-4 text-center'>Your Server Code is: {server.serverCode}</p>
+                  <p className='mt-8 text-center'>Players in the lobby:</p>
+                  {players.map(
+                    player => <p className='text-center'>{player.name}</p>) 
+                  }
+                </div>
             }          
         </div>
     </>

@@ -2,11 +2,32 @@ import {useState} from 'react'
 import { Link } from 'react-router-dom';
 import mafiaHouse from '../assets/Mafia/mafia-house.jpg'
 import JoinForm from './JoinForm';
+import axios from 'axios';
 
 
 const ServerComponent = ({gameName}) => {
   const [clickJoinServer, setJoin] = useState(false);
   const handleJoinClick = () => setJoin(!clickJoinServer);
+
+  const createGame = e =>{
+    e.preventDefault();
+
+    console.log("Joining Game Server");
+    const createServer = async () => {
+      try{
+        console.log("Creating Mafia Game Server...")
+        const gameServer = await axios.post('http://localhost:8080/gamenight/server/mafia', {game: 'Mafia'})
+        console.log("Storing server to localStorage...")
+        localStorage.setItem('server', JSON.stringify(gameServer))
+        console.log("LocalStorage Successfully Set...")
+        window.location = `/mafia/server/play`
+      } catch (e) {
+        console.log("...error");
+      }
+    };
+    createServer();
+  };
+
 
   return (
     <div className='w-full h-screen flex flex-col justify-between mt-28 md:mt-4'>
@@ -18,7 +39,7 @@ const ServerComponent = ({gameName}) => {
                 <JoinForm handleJoinClick={handleJoinClick}/>
                 :
                 <>
-                  <Link to='/mafia/server/create' className='bg-mafiaRed text-white py-3 px-6 min-w-[145px] border border-navy rounded'>Create a {gameName} Server </Link>
+                  <button onClick={createGame} className='bg-mafiaRed text-white py-3 px-6 min-w-[145px] border border-navy rounded'>Create a {gameName} Server </button>
                   <div className='bg-white text-mafiaRed py-3 px-6 min-w-[145px] border border-mafiaRed rounded' onClick={handleJoinClick}>Join a {gameName} Server</div>
                 </>
               }
