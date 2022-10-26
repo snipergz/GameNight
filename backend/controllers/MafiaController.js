@@ -62,7 +62,7 @@ const createPlayer = asyncHandler(async (req, res) => {
             })
             const players = currentServer.players.concat(player)
             const server = await gameServer.updateOne({serverCode:req.params.serverCode}, {$set:{players:players}})
-            res.status(200).json({message: `Created player: ${player}`, status: 'OK'})
+            res.status(200).json({message: `Created player successfully`, player: {player}, status: 'OK'})
             console.log(player)
             console.log(`(Backend) Successfully added ${req.body.name} to the Server: ${req.params.serverCode}`)
         } else {
