@@ -1,11 +1,14 @@
 import {useState, useEffect} from 'react'
+import StartButton from '../components/Mafia/StartButton';
 
 const MafiaServer = () => {
+  const localPlayer = JSON.parse(localStorage.getItem('player'))
+  const player = localPlayer.player.player
   const [loading, setLoading] = useState(true);
   const [players, setPlayers] = useState([]);
   const [server, setServer] = useState([]);
   const [error, setError] = useState(null);
-  console.log("Creating Mafia Server...")
+  // console.log("Creating Mafia Server...")
   // Create a server
   useEffect(() => {
     const fetch = async() => {
@@ -14,7 +17,7 @@ const MafiaServer = () => {
         if(localServer){
           setLoading(false)
           const JSONServer = JSON.parse(localServer)
-          console.log(JSONServer.data)
+          // console.log(JSONServer.data)
           setServer(JSONServer.data)
           setPlayers(JSONServer.data.players)
         } else {
@@ -45,6 +48,7 @@ const MafiaServer = () => {
                   {players.map(
                     player => <p className='text-center'>{player.name}</p>) 
                   }
+                    <StartButton player={player}/>
                 </div>
             }          
         </div>
