@@ -119,12 +119,24 @@ const getServer = asyncHandler(async (req, res) => {
 const createServer = asyncHandler(async (req, res) => {
     try {
         console.log(`Creating Game Server for the game: ${req.body.game}...`)
+        const serverCode = generateServerCode()
         const server = await gameServer.create({
-            serverCode: generateServerCode(),
+            serverCode: serverCode,
             players: [],
             status: true
         })
-        res.status(200).json(server)
+        console.log("Creating Moderator Player Object...")
+        const player = await mafiaPlayer.create({
+            serverCode: serverCode,
+            playerID: generatePlayerID(),
+            role: 'moderator',
+            name: "Moderator",
+            status: true,
+            isAlive: false,
+        })
+        await gameServer.updateOne({serverCode:serverCode}, {$set:{players:player}})
+        const updatedServer = await gameServer.findOne({serverCode:serverCode})
+        res.status(200).json(updatedServer)
         console.log(`Successfully Created a Game Server for the game: ${req.body.game}`)
     } catch (error) {
         console.log(error)
