@@ -33,7 +33,7 @@ const MafiaServer = () => {
 
   return (
     <>
-        <div className='text-white'>
+        <div className='text-white relative h-full'>
             {loading
                 ?
                 <h2>Loading...</h2>
@@ -46,7 +46,9 @@ const MafiaServer = () => {
                   <p className='mt-4 text-center'>Your Server Code is: {server.serverCode}</p>
                   <p className='mt-8 text-center'>Players in the lobby:</p>
                   {players.map(
-                    player => <p className='text-center'>{player.name}</p>) 
+                    player => 
+                      <p className='text-center'>{player.name} Not Ready</p>
+                    ) 
                   }
                     <StartButton player={player}/>
                 </div>

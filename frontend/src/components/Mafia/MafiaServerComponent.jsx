@@ -1,11 +1,11 @@
 import {useState} from 'react'
 import { Link } from 'react-router-dom';
-import mafiaHouse from '../assets/Mafia/mafia-house.jpg'
+import mafiaHouse from '../../assets/Mafia/mafia-house.jpg'
 import JoinForm from './JoinForm';
 import axios from 'axios';
 
 
-const ServerComponent = ({gameName}) => {
+const MafiaServerComponent = ({gameName}) => {
   const [clickJoinServer, setJoin] = useState(false);
   const handleJoinClick = () => setJoin(!clickJoinServer);
 
@@ -53,4 +53,4 @@ const ServerComponent = ({gameName}) => {
   )
 }
 
-export default ServerComponent
+export default MafiaServerComponent

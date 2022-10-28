@@ -1,12 +1,12 @@
 import React from 'react'
 import Navbar from '../components/Navbar'
-import ServerComponent from '../components/ServerComponent'
+import MafiaServerComponent from '../components/Mafia/MafiaServerComponent'
 
 const Server = ({gameName}) => {
   return (
     <>
         <Navbar/>
-        <ServerComponent gameName={gameName}/>
+        <MafiaServerComponent gameName={gameName}/>
     </>
   )
 }
