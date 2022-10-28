@@ -1,42 +1,52 @@
-import React, {useState} from 'react'
-import { Link } from 'react-router-dom';
-import {HiChevronDoubleUp, HiOutlineViewList } from 'react-icons/hi'
+import React, { useState } from "react";
+import { HiChevronDoubleUp, HiOutlineViewList } from "react-icons/hi";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
-    const [nav, setNav] = useState(false);
-    const handleClick = () => setNav(!nav);
+  const [nav, setNav] = useState(false);
+  const handleClick = () => setNav(!nav);
 
   return (
-    <div className='w-screen text-white h-[50px] bg-navy z-10 top-0 fixed drop-shadow-lg'>
-        <div className='px-2 flex justify-between items-center w-full h-full'>
-            <div className='flex items-center'>
-            <Link className='font-bold mr-4 hidden sm:block' to='/'>
-                <span className='text-neonPink text-xl'>Game</span>
-                <span className='text-neonBlue text-xl'>Night</span>
-            </Link>
-            </div>
-            <div className='hidden md:flex pr-4 items-center gap-4'>
-                <Link to='/home' className='hover:text-neonBlue'>Home</Link>
-                <Link to='/mafia' className='hover:text-neonPink'>Mafia</Link>
-                <Link to='/taboo' className='hover:text-neonBlue'>Taboo</Link>
-                <button className='hover:text-neonPink'>Sign In</button>
-                <button className='hover:text-neonBlue'>Sign Up</button>
-            </div>
-            <div className='md:hidden mr-4 justify-start' onClick={handleClick}>
-                {!nav ? <HiOutlineViewList/>: <HiChevronDoubleUp/>}
-            </div>
+    <>
+      <ul
+        className={
+          !nav
+            ? "invisible md:visible text-white p-2 flex flex-row justify-between"
+            : "text-white flex flex-col md:gap-1 p-2 "
+        }
+      >
+        <div className="invisible md:visible flex items-center ">
+          <Link className="font-bold mr-4 hidden sm:block" to="/">
+            <span className="text-neonPink text-xl">Game</span>
+            <span className="text-neonBlue text-xl">Night</span>
+          </Link>
         </div>
-
-        <ul className={!nav ? 'hidden' : 'absolute bg-navy w-full px-8'}>
-            <Link className='border-b-2 border-zinc-300 w-full block' to='/mafia'>Mafia</Link>
-            <Link className='border-b-2 border-zinc-300 w-full blc' to='/taboo'>Taboo</Link>
-            <div className='flex flex-col my-4'>
-            <button className='border-none bg-transparent text-indigo-600 px-8 py-3 mb-4'>Sign In</button>
-            <button className='px-8 py-3'>Sign Up</button>
+        <div className="md:pr-4 flex flex-col md:inline-block top-0 fixed  md:relative bg-navy w-full md:w-auto md:bg-transparent z-10">
+          <div
+            className="visible md:hidden mr-4 p-2 pb-0 pl-0 justify-start text-white "
+            onClick={handleClick}
+          >
+            {!nav ? <HiOutlineViewList /> : <HiChevronDoubleUp />}
+          </div>
+          <Link to="/home" className="hover:text-neonBlue md:pr-3">
+            Home
+          </Link>
+          <Link to="/mafia" className="hover:text-neonPink md:pr-3">
+            Mafia
+          </Link>
+          <Link to="/taboo" className="hover:text-neonBlue md:pr-3">
+            Taboo
+          </Link>
+          <button className="hover:text-neonPink text-left md:pr-3">
+            Sign In
+          </button>
+          <button className="hover:text-neonBlue text-left md:pr-3">
+            Sign Up
+          </button>
         </div>
-        </ul>
-    </div>
-  )
-}
+      </ul>
+    </>
+  );
+};
 
-export default Navbar
+export default Navbar;
