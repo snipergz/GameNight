@@ -57,8 +57,8 @@ const createPlayer = asyncHandler(async (req, res) => {
                 playerID: generatePlayerID(),
                 role: 'civilian',
                 name: req.body.name,
-                status: true,
-                isAlive: false,
+                status: false,
+                isAlive: true,
             })
             const players = currentServer.players.concat(player)
             const server = await gameServer.updateOne({serverCode:req.params.serverCode}, {$set:{players:players}})
@@ -89,6 +89,22 @@ const deletePlayer = asyncHandler(async (req, res) => {
     } catch (error) {
         res.status(400)
         throw new Error('Player not found')
+    }
+})
+
+// @desc    Update Player
+// @route   Update /gamenight/server/mafia/player/:serverCode/:playerID
+// @access  Public
+const updatePlayer = asyncHandler(async (req, res) => {
+    try {
+        console.log(`Finding player with PlayerID: ${req.params.playerID}...`)
+        await gameServer.updateOne({serverCode:req.params.serverCode, "players.playerID":req.params.playerID}, {$set:{"players.$.status":true}})
+        console.log(`Updated ${req.params.playerID}'s status to True`)
+        res.status(200).json({message: `Updated player with playerID: ${req.params.playerID} status to true`})
+    } catch (error) {
+        res.status(400)
+        console.log(error)
+        throw new Error('Failed updating player')
     }
 })
 
@@ -161,5 +177,5 @@ const deleteServer = asyncHandler(async (req, res) => {
 })
 
 module.exports = {
-    getServer, createServer, deleteServer, getPlayer, createPlayer, deletePlayer
+    getServer, createServer, deleteServer, getPlayer, createPlayer, deletePlayer, updatePlayer
 } 
