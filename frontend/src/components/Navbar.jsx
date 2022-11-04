@@ -28,19 +28,28 @@ const Navbar = () => {
           >
             {!nav ? <HiOutlineViewList /> : <HiChevronDoubleUp />}
           </div>
-          <Link to="/home" className="hover:text-neonBlue md:pr-3">
+          <Link
+            to="/home"
+            className="hover:text-neonBlue mb-1 pb-2 pt-2 lg:pr-3 lg:pb-0 lg:pt-0"
+          >
             Home
           </Link>
-          <Link to="/mafia" className="hover:text-neonPink md:pr-3">
+          <Link
+            to="/mafia"
+            className="hover:text-neonPink mb-1 pb-2 lg:pr-3 lg:pb-0"
+          >
             Mafia
           </Link>
-          <Link to="/taboo" className="hover:text-neonBlue md:pr-3">
+          <Link
+            to="/taboo"
+            className="hover:text-neonBlue mb-1 pb-2 lg:pr-3 lg:pb-0"
+          >
             Taboo
           </Link>
-          <button className="hover:text-neonPink text-left md:pr-3">
+          <button className="hover:text-neonPink text-left mb-1 pb-2 lg:pr-3 lg:pb-0">
             Sign In
           </button>
-          <button className="hover:text-neonBlue text-left md:pr-3">
+          <button className="hover:text-neonBlue text-left mb-1 pb-2 lg:pr-3 lg:pb-0">
             Sign Up
           </button>
         </div>
