@@ -12,10 +12,10 @@ const ServerComponent = ({ gameName }) => {
     <div className="w-full h-screen flex flex-col justify-between mt-28 md:mt-4">
       <div className="grid md:grid-cols-2 max-w-[1240px] m-auto">
         <div className="flex flex-col justify-center items-center xl:items-start w-full px-2 py-2 mb-5 sm:m-none ">
-          <h1 className="text-5xl lg:text-6xl font-navFontRS text-mafiaRed xl:leading-3 outline-none drop-shadow-mafia md:pl-11 xl:pl-0 xl:mb-5">
+          <h1 className="text-5xl lg:text-6xl font-navFontRS text-mafiaRed xl:leading-3 outline-none drop-shadow-mafia md:pl-11 xl:pl-0 xl:mb-4">
             Mafia
           </h1>
-          <div className="flex flex-col lg:flex-row gap-5 lg:gap-2 w-full justify-center xl:justify-start ml-5 pl-4 xl:ml-0 xl:pl-0 mt-4 md:mt-2">
+          <div className="flex flex-col lg:flex-row gap-5 lg:gap-2 w-full justify-center xl:justify-start md:ml-5 lg:px-3 lg:pl-4 xl:ml-0 xl:pl-0 mt-4 md:mt-2">
             {clickJoinServer ? (
               <JoinForm handleJoinClick={handleJoinClick} />
             ) : clickCreateServer ? (
