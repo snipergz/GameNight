@@ -11,8 +11,8 @@ const Hero = () => {
                 A Game of Mystery and Excitement
               </h2>
               <div className='flex flex-row gap-5 w-full justify-center xl:justify-start'>
-                <a className='bg-mafiaRed text-white py-3 px-6 min-w-[145px] border border-navy rounded' href="#games" >Let's Play 👇</a>
-                <a className='bg-white text-mafiaRed py-3 px-6 min-w-[145px] border border-mafiaRed rounded' href="#about">Learn More</a>
+                <a className='bg-mafiaRed text-white py-3 px-6 min-w-[145px] border border-navy rounded' href="#mafia-characters" >Let's Play 👇</a>
+                <a className='bg-white text-mafiaRed py-3 px-6 min-w-[145px] border border-mafiaRed rounded' href="#mafia-about">Learn More</a>
               </div>
 
             </div>

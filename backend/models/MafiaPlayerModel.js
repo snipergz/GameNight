@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 
 const MafiaPlayerSchema = mongoose.Schema({
-    serverID: {
+    serverCode: {
         type: String,
         required: [true, 'You must have access to a server'],
     },

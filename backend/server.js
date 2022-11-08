@@ -4,6 +4,7 @@ const path = require('path');
 const port = process.env.PORT || 8080;
 const static_dir = path.join(__dirname, 'static');
 const connectDB = require('./config/db')
+const cors = require('cors');
 
 // Connecting to MongoDB
 connectDB()
@@ -14,6 +15,7 @@ const app = express();
 app.use(express.static(static_dir));
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
+app.use(cors())
 
 app.use('/gamenight/server', require('./routes/MafiaRoutes'))
 
