@@ -25,13 +25,13 @@ const ServerComponent = ({ gameName }) => {
             ) : (
               <>
                 <div
-                  className="bg-mafiaRed text-white py-3 px-6 min-w-[145px] border border-navy rounded hover:cursor-pointer text-center"
+                  className="bg-mafiaRed text-white py-3 px-6 min-w-[145px] border border-navy rounded hover:cursor-pointer "
                   onClick={handleCreateClick}
                 >
                   Create a {gameName} Server
                 </div>
                 <div
-                  className="bg-white text-mafiaRed py-3 px-6 min-w-[145px] border border-mafiaRed rounded hover:cursor-pointer text-center"
+                  className="bg-white text-mafiaRed py-3 px-6 min-w-[145px] border border-mafiaRed rounded hover:cursor-pointer "
                   onClick={handleJoinClick}
                 >
                   Join a {gameName} Server

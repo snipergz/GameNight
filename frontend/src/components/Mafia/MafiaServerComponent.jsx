@@ -33,27 +33,27 @@ const MafiaServerComponent = ({ gameName }) => {
   return (
     <div className="w-full h-screen flex flex-col justify-between mt-28 md:mt-4">
       <div className="grid md:grid-cols-2 max-w-[1240px] m-auto">
-        <div className="flex flex-col justify-center items-center xl:items-start w-full px-2 py-2 mb-5 sm:m-none">
-          <h1 className="text-5xl lg:text-6xl font-navFontRS text-mafiaRed leading-3 outline-none drop-shadow-mafia mb-4">
+        <div className="flex flex-col justify-center items-center xl:items-start w-full px-2 py-2 mb-5 sm:m-none md:ml-4 lg:ml-0">
+          <h1 className="text-5xl lg:text-6xl font-navFontRS text-mafiaRed leading-3 outline-none drop-shadow-mafia mb-4 md:w-full">
             Mafia
           </h1>
-          <div className="flex flex-col md:flex-row gap-5 w-full justify-center xl:justify-start mt-4 md:mt-0">
+          <div className="flex flex-col gap-5 w-full justify-center xl:justify-start mt-4 md:mt-1 ">
             {clickJoinServer ? (
               <JoinForm handleJoinClick={handleJoinClick} />
             ) : (
               <>
                 <button
                   onClick={createGame}
-                  className="bg-mafiaRed text-white py-3 px-6 min-w-[145px] border border-navy rounded"
+                  className="bg-mafiaRed text-white sm:py-2 lg:py-3 px-6 min-w-[145px] border border-navy rounded hover:cursor-pointer "
                 >
-                  Create a {gameName} Server{" "}
+                  Create a {gameName} Server
                 </button>
-                <div
-                  className="bg-white text-mafiaRed py-3 px-6 min-w-[145px] border border-mafiaRed rounded"
+                <button
+                  className="bg-white text-mafiaRed sm:py-2 lg:py-3 px-6 min-w-[145px] border border-mafiaRed rounded hover:cursor-pointer"
                   onClick={handleJoinClick}
                 >
                   Join a {gameName} Server
-                </div>
+                </button>
               </>
             )}
           </div>
