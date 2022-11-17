@@ -6,7 +6,7 @@ function Mystery() {
   return (
     <>
       <Navbar />
-      <Hero pic={mysteryPic} title={"Mystery"} titleColor={"#F1E178"} />
+      <Hero pic={mysteryPic} title={"Mystery"} titleColor={"mysteryYellow"} />
     </>
   );
 }

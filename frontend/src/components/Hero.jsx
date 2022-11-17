@@ -6,7 +6,7 @@ const Hero = ({ pic, title, titleColor }) => {
       <div className="grid md:grid-cols-2 max-w-[1240px] m-auto">
         <div className="flex flex-col justify-center items-center xl:items-start w-full px-2 py-2 mb-5 sm:m-none">
           <h1 className="text-5xl lg:text-6xl font-navFontRS">
-            <span className={`text-[${titleColor}] leading-3 outline-none `}>
+            <span className={`text-${titleColor} leading-3 outline-none`}>
               {title}
             </span>
           </h1>
@@ -19,13 +19,13 @@ const Hero = ({ pic, title, titleColor }) => {
           </h2>
           <div className="flex flex-row gap-5 w-full justify-center xl:justify-start">
             <a
-              className={`bg-[${titleColor}] text-white py-3 px-6 min-w-[145px] border border-navy rounded`}
+              className={`bg-${titleColor} text-white py-3 px-6 min-w-[145px] border border-navy rounded`}
               href="#games"
             >
               Let's Play 👇
             </a>
             <a
-              className="bg-white text-darkPurple py-3 px-6 min-w-[145px] border border-darkPurple rounded"
+              className={`bg-white text-darkPurple py-3 px-6 min-w-[145px] border border-darkPurple rounded`}
               href="#about"
             >
               Learn More
