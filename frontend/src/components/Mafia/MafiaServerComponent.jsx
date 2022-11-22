@@ -17,10 +17,17 @@ const MafiaServerComponent = ({gameName}) => {
       try{
         console.log("Creating Mafia Game Server...")
         const gameServer = await axios.post('http://localhost:8080/gamenight/server/mafia', {game: 'Mafia'})
-        console.log("Storing server to localStorage...")
-        localStorage.setItem('server', JSON.stringify(gameServer))
-        console.log("LocalStorage Successfully Set...")
-        window.location = `/mafia/server/play`
+        console.log("...sending ajax create player post");
+        const result = await axios.post(`http://localhost:8080/gamenight/server/mafia/player/${gameServer.data.serverCode}`,{
+          name: "Moderator",
+        });
+        if(result.data.status === 'OK'){
+          console.log("Storing server and player to localStorage...")
+          localStorage.setItem('server', JSON.stringify(gameServer.data))
+          localStorage.setItem('player', JSON.stringify(result.data))
+          console.log("LocalStorage Successfully Set...")
+          window.location = `/mafia/server/play`
+        }
       } catch (e) {
         console.log("...error");
       }

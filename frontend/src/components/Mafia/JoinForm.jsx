@@ -18,10 +18,9 @@ const JoinForm = ({handleJoinClick}) => {
           console.log("Storing server to localStorage...")
           const server = await axios.get(`http://localhost:8080/gamenight/server/mafia/${serverCode}`)
           console.log(JSON.stringify(server))
-          localStorage.setItem('server', JSON.stringify(server))
+          localStorage.setItem('server', JSON.stringify(server.data))
           localStorage.setItem('player', JSON.stringify(result.data))
           console.log("LocalStorage Successfully Set...")
-          
           window.location = `/mafia/server/play`
         }else{
           console.log("LocalStorage Failed...")
