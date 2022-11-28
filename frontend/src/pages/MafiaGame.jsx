@@ -22,7 +22,7 @@ const MafiaGame = () => {
       const receivedPlayer = JSON.parse(player)
       setServer(receivedServer)
       setPlayers(receivedServer.players)
-      setPlayer(receivedPlayer)
+      setPlayer(receivedPlayer.player)
       setLoading(false)
     } catch (error) {
       setError(error)
@@ -36,7 +36,21 @@ const MafiaGame = () => {
         const receivedPlayer = JSON.parse(player)
         setServer(receivedServer)
         setPlayers(receivedServer.players)
-        setPlayer(receivedPlayer)
+        setPlayer(receivedPlayer.player)
+        setLoading(false)
+      } catch (error) {
+        setError(error)
+      }
+    })
+
+    // For Players joining room
+    socket.on("receive-mafia-player-update", (gameServer, player) => {
+      try {
+        const receivedServer = JSON.parse(gameServer)
+        const receivedPlayer = JSON.parse(player)
+        setServer(receivedServer)
+        setPlayers(receivedServer.players)
+        setPlayer(receivedPlayer.player)
         setLoading(false)
       } catch (error) {
         setError(error)
@@ -63,8 +77,7 @@ const MafiaGame = () => {
                   <p key={player.playerID} className='text-center'>{player.name} {player.status === true ? "Ready" : "Not Ready"}</p>
                 ) 
               }
-                {/* FIXME: FIX THE START BUTTON */}
-                <StartButton player={currentPlayer} players={players}/>
+              <StartButton player={currentPlayer} players={players}/>
             </div>
         }
       </div>

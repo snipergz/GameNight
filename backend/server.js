@@ -38,6 +38,13 @@ io.on("connection", socket => {
         console.log(`SERVER_SIDE_MESSAGE: Mafia Player Joined Room: ${gameServer.serverCode}`)
     })
 
+    socket.on("mafia-player-ready", (gameServer, player) => {
+        console.log(gameServer, player)
+        socket.join(gameServer.serverCode)
+        io.to(gameServer.serverCode).emit("receive-mafia-player-update", JSON.stringify(gameServer), JSON.stringify(player))
+        console.log(`SERVER_SIDE_MESSAGE: ${player.name} in ${gameServer.serverCode} is Ready to Play`)
+    })
+
     socket.on("mafia-server-connect", msg => {
         console.log(msg)
         // console.log("SERVER SIDE: SUCCESSFULLY received message from mafia server component\n")
