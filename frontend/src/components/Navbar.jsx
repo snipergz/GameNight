@@ -15,7 +15,7 @@ const Navbar = () => {
             : "text-white flex flex-col md:gap-1 p-2 "
         }
       >
-        <div className="invisible md:visible flex items-center ">
+        <div className="invisible lg:visible flex items-center ">
           <Link className="font-bold mr-4 hidden sm:block" to="/">
             <span className="text-neonPink text-xl">Game</span>
             <span className="text-neonBlue text-xl">Night</span>
@@ -28,19 +28,34 @@ const Navbar = () => {
           >
             {!nav ? <HiOutlineViewList /> : <HiChevronDoubleUp />}
           </div>
-          <Link to="/home" className="hover:text-neonBlue md:pr-3">
+          <Link
+            to="/home"
+            className="hover:text-neonBlue pb-2 pt-2 md:pr-3 lg:pb-0 lg:pt-0"
+          >
             Home
           </Link>
-          <Link to="/mafia" className="hover:text-neonPink md:pr-3">
+          <Link
+            to="/mafia"
+            className="hover:text-neonPink pb-2 md:pr-3 lg:pb-0"
+          >
             Mafia
           </Link>
-          <Link to="/taboo" className="hover:text-neonBlue md:pr-3">
+          <Link
+            to="/taboo"
+            className="hover:text-neonBlue pb-2 md:pr-3 lg:pb-0"
+          >
             Taboo
           </Link>
-          <button className="hover:text-neonPink text-left md:pr-3">
+          <Link
+            to="/mystery"
+            className="hover:text-neonPink pb-2 md:pr-3 lg:pb-0"
+          >
+            Mystery
+          </Link>
+          <button className="hover:text-neonBlue text-left pb-2 md:pr-3 lg:pb-0">
             Sign In
           </button>
-          <button className="hover:text-neonBlue text-left md:pr-3">
+          <button className="hover:text-neonPink text-left pb-2 md:pr-3 lg:pb-0">
             Sign Up
           </button>
         </div>
