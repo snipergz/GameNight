@@ -1,6 +1,16 @@
 import axios from 'axios'
+import { SocketContext } from '../../context/socket';
+import {useState, useContext} from 'react'
+import { useNavigate } from 'react-router-dom';
+
 
 const JoinForm = ({handleJoinClick}) => {
+  // WebSocket Initialization
+  const socket = useContext(SocketContext);
+  // console.log(socket)
+  // console.log(`Active: ${socket.active}`)
+
+  const navigate = useNavigate()
 
   const joinGame = e =>{
     e.preventDefault();
@@ -11,22 +21,19 @@ const JoinForm = ({handleJoinClick}) => {
     const joinServer = async () => {
       try{
         console.log("...sending ajax create player post");
-        const result = await axios.post(`http://localhost:8080/gamenight/server/mafia/player/${serverCode}`,{
+        const player = await axios.post(`http://localhost:8080/gamenight/server/mafia/player/${serverCode}`,{
           name: playerName,
         });
-        if(result.data.status === 'OK'){
+        if(player.data.status === 'OK'){
           console.log("Storing server to localStorage...")
           const server = await axios.get(`http://localhost:8080/gamenight/server/mafia/${serverCode}`)
-          console.log(JSON.stringify(server))
-          localStorage.setItem('server', JSON.stringify(server.data))
-          localStorage.setItem('player', JSON.stringify(result.data))
-          console.log("LocalStorage Successfully Set...")
-          window.location = `/mafia/server/play`
-        }else{
-          console.log("LocalStorage Failed...")
+          socket.emit('join-room', 
+          `\nCLIENT_SIDE_MESSAGE: Player Created, Joining Room ${serverCode}`, server.data, player.data
+          )
+          navigate('/mafia/server/play')
         }
       } catch (e) {
-        console.log("...error");
+        console.log(e);
       }
     };
     joinServer();

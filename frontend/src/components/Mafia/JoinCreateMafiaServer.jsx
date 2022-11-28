@@ -1,35 +1,50 @@
-import {useState} from 'react'
-import { Link } from 'react-router-dom';
+import {useState, useContext} from 'react'
+import { SocketContext } from '../../context/socket';
 import mafiaHouse from '../../assets/Mafia/mafia-house.jpg'
 import JoinForm from './JoinForm';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 
-const MafiaServerComponent = ({gameName}) => {
+const JoinCreateMafiaServer = ({gameName}) => {
   const [clickJoinServer, setJoin] = useState(false);
   const handleJoinClick = () => setJoin(!clickJoinServer);
 
+  const navigate = useNavigate()
+
+  // Passed WebSocket Initialization
+  const socket = useContext(SocketContext);
+  console.log(socket)
+  console.log(`Active: ${socket.active}`)
+
   const createGame = e =>{
     e.preventDefault();
-
-    console.log("Joining Game Server");
     const createServer = async () => {
-      try{
-        console.log("Creating Mafia Game Server...")
-        const gameServer = await axios.post('http://localhost:8080/gamenight/server/mafia', {game: 'Mafia'})
-        console.log("...sending ajax create player post");
-        const result = await axios.post(`http://localhost:8080/gamenight/server/mafia/player/${gameServer.data.serverCode}`,{
-          name: "Moderator",
-        });
-        if(result.data.status === 'OK'){
-          console.log("Storing server and player to localStorage...")
-          localStorage.setItem('server', JSON.stringify(gameServer.data))
-          localStorage.setItem('player', JSON.stringify(result.data))
-          console.log("LocalStorage Successfully Set...")
-          window.location = `/mafia/server/play`
+      if(socket.active){
+        try{
+          console.log("Socket is Active...")
+          console.log("Creating New Mafia Game Server...")
+          let gameServer = await axios.post('http://localhost:8080/gamenight/server/mafia', {game: 'Mafia'})
+          console.log("Game Server Successfully Created...")
+          console.log("Sending ajax create player Post Request...");
+          const player = await axios.post(`http://localhost:8080/gamenight/server/mafia/player/${gameServer.data.serverCode}`,{
+            name: "Moderator",
+          });
+          gameServer = await axios.get(`http://localhost:8080/gamenight/server/mafia/${gameServer.data.serverCode}`)
+
+          if(player.data.status === 'OK'){
+            console.log("Moderator Player Successfully Created...")
+            
+            // WebSocket Communication to tell the server that a mafia server has been created
+            socket.emit('create-mafia-server', 
+            "\nCLIENT_SIDE_MESSAGE: Mafia Game Server Created", gameServer.data, player.data
+            )
+
+            navigate('/mafia/server/play')
+          }
+        } catch (e) {
+          console.log("...error");
         }
-      } catch (e) {
-        console.log("...error");
       }
     };
     createServer();
@@ -57,7 +72,8 @@ const MafiaServerComponent = ({gameName}) => {
           </div>
       </div>
     </div>
+    
   )
 }
 
-export default MafiaServerComponent
+export default JoinCreateMafiaServer

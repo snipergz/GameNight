@@ -142,7 +142,7 @@ const createServer = asyncHandler(async (req, res) => {
         const server = await gameServer.create({
             serverCode: serverCode,
             players: [],
-            status: true
+            status: false
         })
         // console.log("Creating Moderator Player Object...")
         // const player = await mafiaPlayer.create({
@@ -164,6 +164,23 @@ const createServer = asyncHandler(async (req, res) => {
     }
 })
 
+// @desc    Update Server 
+// @route   Post /gamenight/server/mafia/:serverCode
+// @access  Public
+const updateServer = asyncHandler(async (req, res) => {
+    try {
+        console.log(`Finding server with serverCode: ${req.params.serverCode}...`)
+        await gameServer.updateOne({serverCode:req.params.serverCode}, {$set:{status:true}})
+        const server = await gameServer.findOne({serverCode:req.params.serverCode})
+        console.log(`Updated ${req.params.serverCode}'s status to True`)
+        res.status(200).json({message: `Updated server with serverCode: ${req.params.serverCode} status to true`, server})
+    } catch (error) {
+        res.status(400)
+        console.log(error)
+        throw new Error('Failed updating server')
+    }
+})
+
 // @desc    Delete Server with serverCode
 // @route   Delete /gamenight/server/mafia/:serverCode
 // @access  Public
@@ -180,5 +197,5 @@ const deleteServer = asyncHandler(async (req, res) => {
 })
 
 module.exports = {
-    getServer, createServer, deleteServer, getPlayer, createPlayer, deletePlayer, updatePlayer
+    getServer, createServer, deleteServer, updateServer, getPlayer, createPlayer, deletePlayer, updatePlayer
 } 
