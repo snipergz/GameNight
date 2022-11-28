@@ -86,13 +86,6 @@ const JoinCreateMafiaServer = ({gameName}) => {
           />
         </div>
       </div>
-      <div className="">
-        <img
-          className="w-[90%] md:w-[75%] mx-auto border border-black rounded-xl"
-          src={mafiaHouse}
-          alt=""
-        />
-      </div>
     </div>
     
   )
