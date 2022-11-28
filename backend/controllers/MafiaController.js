@@ -92,13 +92,14 @@ const deletePlayer = asyncHandler(async (req, res) => {
     }
 })
 
-// @desc    Update Player
+// @desc    Update Player's Status to true or false (ready or not ready), 
 // @route   Update /gamenight/server/mafia/player/:serverCode/:playerID
 // @access  Public
 const updatePlayer = asyncHandler(async (req, res) => {
     try {
+        console.log(req.body.status)
         console.log(`Finding player with PlayerID: ${req.params.playerID}...`)
-        await gameServer.updateOne({serverCode:req.params.serverCode, "players.playerID":req.params.playerID}, {$set:{"players.$.status":true}})
+        await gameServer.updateOne({serverCode:req.params.serverCode, "players.playerID":req.params.playerID}, {$set:{"players.$.status":req.body.status}})
         const server = await gameServer.findOne({serverCode:req.params.serverCode})
         const players = server.players.filter(plr => plr.playerID == req.params.playerID)   
         const player = players[0]

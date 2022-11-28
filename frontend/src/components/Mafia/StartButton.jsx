@@ -13,6 +13,7 @@ const StartButton = ({player, players}) => {
     let startGame = true;
 
     const handleStartClick = async () => {
+      console.log(player)
       if(player.name === "Moderator"){
         for (player of players){
           if(player.status === false){
@@ -22,9 +23,10 @@ const StartButton = ({player, players}) => {
         if(!startGame)
           return
         else{
-          
           console.log(player.name + " clicked Start")
-          const playerResult = await axios.patch(`http://localhost:8080/gamenight/server/mafia/player/${player.serverCode}/${player.playerID}`)
+          const playerResult = await axios.patch(`http://localhost:8080/gamenight/server/mafia/player/${player.serverCode}/${player.playerID}`, {
+            status: !player.status
+          })
           const server = await axios.get(`http://localhost:8080/gamenight/server/mafia/${player.serverCode}`)
           socket.emit('mafia-player-ready', server.data, playerResult.data.player)
           setStart(!clickStart)
@@ -32,7 +34,9 @@ const StartButton = ({player, players}) => {
         }
       }
       console.log(player.name + " clicked Start")
-      const playerResult = await axios.patch(`http://localhost:8080/gamenight/server/mafia/player/${player.serverCode}/${player.playerID}`)
+      const playerResult = await axios.patch(`http://localhost:8080/gamenight/server/mafia/player/${player.serverCode}/${player.playerID}`, {
+        status: !player.status
+      })
       const server = await axios.get(`http://localhost:8080/gamenight/server/mafia/${player.serverCode}`)
       socket.emit('mafia-player-ready', server.data, playerResult.data.player)
       setStart(!clickStart)
