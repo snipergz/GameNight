@@ -14,20 +14,34 @@ const StartButton = ({player, players}) => {
 
     const handleStartClick = async () => {
       console.log(player)
+      // The Moderator can only start the game if there is atleast 7 people (inclusive) and everyone is ready
       if(player.name === "Moderator"){
         for (player of players){
-          if(player.status === false){
-            startGame = false
+          if (player.name === "Moderator")
+            continue
+          else{
+            if(player.status === false){
+              console.log(`${player.name} is not Ready`)
+              startGame = false
+            }
           }
         }
-        if(!startGame)
+        if(!startGame || players.length < 7){
+          console.log("Not enough players and not all are ready")
           return
+        }
         else{
           console.log(player.name + " clicked Start")
           const playerResult = await axios.patch(`http://localhost:8080/gamenight/server/mafia/player/${player.serverCode}/${player.playerID}`, {
             status: !player.status
           })
+
           const server = await axios.get(`http://localhost:8080/gamenight/server/mafia/${player.serverCode}`)
+
+          sessionStorage.setItem('player', JSON.stringify(playerResult.data.player))
+          sessionStorage.setItem('server', JSON.stringify(server.data))
+          sessionStorage.setItem('players', JSON.stringify(server.data.players))
+
           socket.emit('mafia-player-ready', server.data, playerResult.data.player)
           setStart(!clickStart)
           return
@@ -38,6 +52,9 @@ const StartButton = ({player, players}) => {
         status: !player.status
       })
       const server = await axios.get(`http://localhost:8080/gamenight/server/mafia/${player.serverCode}`)
+      sessionStorage.setItem('server', JSON.stringify(server.data))
+      sessionStorage.setItem('players', JSON.stringify(server.data.players))
+      sessionStorage.setItem('player', JSON.stringify(playerResult.data.player))
       socket.emit('mafia-player-ready', server.data, playerResult.data.player)
       setStart(!clickStart)
     }

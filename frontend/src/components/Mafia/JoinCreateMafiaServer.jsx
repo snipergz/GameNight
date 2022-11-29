@@ -10,6 +10,10 @@ const JoinCreateMafiaServer = ({gameName}) => {
   const [clickJoinServer, setJoin] = useState(false);
   const handleJoinClick = () => setJoin(!clickJoinServer);
 
+  const sessionServer = JSON.parse(sessionStorage.getItem('server'))
+  const sessionPlayers = JSON.parse(sessionStorage.getItem('players'))
+  const sessionPlayer = JSON.parse(sessionStorage.getItem('player'))
+
   const navigate = useNavigate()
 
   // Passed WebSocket Initialization
@@ -34,7 +38,23 @@ const JoinCreateMafiaServer = ({gameName}) => {
 
           if(player.data.status === 'OK'){
             console.log("Moderator Player Successfully Created...")
+
+            // Session Storage
+            // FIRST DELETE PREVIOUS SESSION STORED GAME
+            if(sessionServer){
+              sessionStorage.removeItem('server')
+            }
+            if(sessionPlayers){
+              sessionStorage.removeItem('players')
+            }
+            if(sessionPlayer){
+              sessionStorage.removeItem('player')
+            }
             
+            sessionStorage.setItem('player', JSON.stringify(player.data.player))
+            sessionStorage.setItem('server', JSON.stringify(gameServer.data))
+            sessionStorage.setItem('players', JSON.stringify(gameServer.data.players))
+
             // WebSocket Communication to tell the server that a mafia server has been created
             socket.emit('create-mafia-server', 
             "\nCLIENT_SIDE_MESSAGE: Mafia Game Server Created", gameServer.data, player.data

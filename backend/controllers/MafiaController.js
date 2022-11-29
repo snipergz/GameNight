@@ -97,13 +97,12 @@ const deletePlayer = asyncHandler(async (req, res) => {
 // @access  Public
 const updatePlayer = asyncHandler(async (req, res) => {
     try {
-        console.log(req.body.status)
         console.log(`Finding player with PlayerID: ${req.params.playerID}...`)
         await gameServer.updateOne({serverCode:req.params.serverCode, "players.playerID":req.params.playerID}, {$set:{"players.$.status":req.body.status}})
         const server = await gameServer.findOne({serverCode:req.params.serverCode})
         const players = server.players.filter(plr => plr.playerID == req.params.playerID)   
         const player = players[0]
-        console.log(`Updated ${req.params.playerID}'s status to True`)
+        console.log(`Updated ${req.params.playerID}'s status to ${req.body.status}`)
         res.status(200).json({message: `Updated player with playerID: ${req.params.playerID} status to true`, player})
     } catch (error) {
         res.status(400)

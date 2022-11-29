@@ -12,6 +12,10 @@ const JoinForm = ({handleJoinClick}) => {
 
   const navigate = useNavigate()
 
+  const sessionServer = JSON.parse(sessionStorage.getItem('server'))
+  const sessionPlayers = JSON.parse(sessionStorage.getItem('players'))
+  const sessionPlayer = JSON.parse(sessionStorage.getItem('player'))
+
   const joinGame = e =>{
     e.preventDefault();
     const playerName = e.target[0].value
@@ -25,8 +29,12 @@ const JoinForm = ({handleJoinClick}) => {
           name: playerName,
         });
         if(player.data.status === 'OK'){
-          console.log("Storing server to localStorage...")
           const server = await axios.get(`http://localhost:8080/gamenight/server/mafia/${serverCode}`)
+
+          sessionStorage.setItem('player', JSON.stringify(player.data.player))
+          sessionStorage.setItem('server', JSON.stringify(server.data))
+          sessionStorage.setItem('players', JSON.stringify(server.data.players))
+
           socket.emit('join-room', 
           `\nCLIENT_SIDE_MESSAGE: Player Created, Joining Room ${serverCode}`, server.data, player.data
           )
