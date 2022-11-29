@@ -39,11 +39,19 @@ io.on("connection", socket => {
     })
 
     socket.on("mafia-player-ready", (gameServer, player) => {
-        console.log(gameServer, player)
+        // console.log(gameServer, player)
         socket.join(gameServer.serverCode)
         io.to(gameServer.serverCode).emit("receive-mafia-player-update", JSON.stringify(gameServer), JSON.stringify(player))
         console.log(`SERVER_SIDE_MESSAGE: ${player.name} in ${gameServer.serverCode} status: ${player.status}`)
     })
+
+    socket.on("mafia-moderator-ready", (gameServer, player) => {
+        // console.log(gameServer, player)
+        socket.join(gameServer.serverCode)
+        io.to(gameServer.serverCode).emit("receive-mafia-moderator-ready", JSON.stringify(gameServer), JSON.stringify(player))
+        console.log(`SERVER_SIDE_MESSAGE: Mafia Moderator Has Begun The Game...`)
+    })
+
 
     socket.on("mafia-reload", (msg, gameServer) => {
         console.log(msg)

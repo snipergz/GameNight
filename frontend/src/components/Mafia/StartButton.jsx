@@ -10,53 +10,56 @@ const StartButton = ({player, players}) => {
     // console.log(`Active: ${socket.active}`)
 
     const [clickStart, setStart] = useState(false);
-    let startGame = true;
+    let allReady = true;
+    
 
     const handleStartClick = async () => {
-      console.log(player)
-      // The Moderator can only start the game if there is atleast 7 people (inclusive) and everyone is ready
-      if(player.name === "Moderator"){
-        for (player of players){
-          if (player.name === "Moderator")
-            continue
-          else{
-            if(player.status === false){
-              console.log(`${player.name} is not Ready`)
-              startGame = false
-            }
-          }
-        }
-        if(!startGame || players.length < 7){
-          console.log("Not enough players and not all are ready")
-          return
-        }
-        else{
-          console.log(player.name + " clicked Start")
-          const playerResult = await axios.patch(`http://localhost:8080/gamenight/server/mafia/player/${player.serverCode}/${player.playerID}`, {
-            status: !player.status
-          })
-
-          const server = await axios.get(`http://localhost:8080/gamenight/server/mafia/${player.serverCode}`)
-
-          sessionStorage.setItem('player', JSON.stringify(playerResult.data.player))
-          sessionStorage.setItem('server', JSON.stringify(server.data))
-          sessionStorage.setItem('players', JSON.stringify(server.data.players))
-
-          socket.emit('mafia-player-ready', server.data, playerResult.data.player)
-          setStart(!clickStart)
-          return
-        }
-      }
       console.log(player.name + " clicked Start")
+      console.log(player)
+
+      // Update the Player's Status to True/False (Ready / Not Ready)
       const playerResult = await axios.patch(`http://localhost:8080/gamenight/server/mafia/player/${player.serverCode}/${player.playerID}`, {
         status: !player.status
       })
+      // Get the Updated Server Object with updated player
       const server = await axios.get(`http://localhost:8080/gamenight/server/mafia/${player.serverCode}`)
+      
+      // Store it into sessionStorage
+      sessionStorage.setItem('player', JSON.stringify(playerResult.data.player))
       sessionStorage.setItem('server', JSON.stringify(server.data))
       sessionStorage.setItem('players', JSON.stringify(server.data.players))
-      sessionStorage.setItem('player', JSON.stringify(playerResult.data.player))
-      socket.emit('mafia-player-ready', server.data, playerResult.data.player)
+      
       setStart(!clickStart)
+
+      // The Moderator can only start the game if there is atleast 7 people (inclusive) and everyone is ready
+      if(player.name !== "Moderator"){
+        socket.emit('mafia-player-ready', server.data, playerResult.data.player)
+      } 
+      else {
+        // Check that every player is ready
+        for (player of players){
+          if (player.name !== "Moderator"){
+            if(player.status === false){
+              console.log(`${player.name} is not Ready`)
+              allReady = false
+            }
+          }
+        }
+        // Check that every player is ready
+        if(!allReady){
+          console.log("Everybody must be ready to start the game")
+          return
+        }
+        // Check that there are atleast 7 players
+        if(players.length < 7){
+          console.log(`There are currently only ${players.length} players, there must be atleast 7`)
+          return
+        }
+        // Start the game
+        else{
+          socket.emit('mafia-moderator-ready', server.data, playerResult.data.player)
+        }
+      }
     }
 
   return (

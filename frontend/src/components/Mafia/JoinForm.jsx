@@ -38,7 +38,7 @@ const JoinForm = ({handleJoinClick}) => {
           socket.emit('join-room', 
           `\nCLIENT_SIDE_MESSAGE: Player Created, Joining Room ${serverCode}`, server.data, player.data
           )
-          navigate('/mafia/server/play')
+          navigate('/mafia/server/lobby')
         }
       } catch (e) {
         console.log(e);

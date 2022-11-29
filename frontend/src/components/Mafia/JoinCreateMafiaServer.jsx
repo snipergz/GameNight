@@ -60,7 +60,7 @@ const JoinCreateMafiaServer = ({gameName}) => {
             "\nCLIENT_SIDE_MESSAGE: Mafia Game Server Created", gameServer.data, player.data
             )
 
-            navigate('/mafia/server/play')
+            navigate('/mafia/server/lobby')
           }
         } catch (e) {
           console.log("...error");
