@@ -25,7 +25,7 @@ function generatePlayerID(){
 
 function chooseRooms(){
     //Randomly Chooses a room and removes from the pool of room choices
-    return Math.floor(Math.random() % 8);
+    return Math.floor(Math.random() % 3);
 }
 
 //MurderMystery Player CRUD METHODS
@@ -146,7 +146,7 @@ const createServer = asyncHandler(async (req, res) => {
             players: [],
             status: true,
             room: 0,
-            choiceOne: chooseRooms(),
+            choiceOne: chooseSafeRoom(),
             choiceTwo: chooseRooms(),
             choiceThree: chooseRooms(),
         })

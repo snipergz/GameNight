@@ -17,7 +17,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 app.use(cors())
 
-app.use('/gamenight/server', require('./routes/MafiaRoutes'))
+app.use('/gamenight/server', require('./routes/MafiaRoutes'), require('./routes/MurderMysteryRoutes'))
 
 // Start up the server
 console.log("Javascript running on the server");

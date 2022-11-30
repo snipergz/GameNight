@@ -1,0 +1,3 @@
+NODE_ENV = development
+PATH = 8080
+MONGO_URI = mongodb+srv://gamenightadmin:W5vTshXmB5ARND5d@gamenightcluster.thafije.mongodb.net/GameNight?retryWrites=true&w=majority
