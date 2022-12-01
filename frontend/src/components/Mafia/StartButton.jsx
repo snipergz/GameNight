@@ -29,10 +29,9 @@ const StartButton = ({player, players}) => {
       sessionStorage.setItem('server', JSON.stringify(server.data))
       sessionStorage.setItem('players', JSON.stringify(server.data.players))
       
-      setStart(!clickStart)
-
       // The Moderator can only start the game if there is atleast 7 people (inclusive) and everyone is ready
       if(player.name !== "Moderator"){
+        setStart(!clickStart)
         socket.emit('mafia-player-ready', server.data, playerResult.data.player)
       } 
       else {
@@ -57,6 +56,7 @@ const StartButton = ({player, players}) => {
         }
         // Start the game
         else{
+          setStart(!clickStart)
           socket.emit('mafia-moderator-ready', server.data, playerResult.data.player)
         }
       }
@@ -64,7 +64,12 @@ const StartButton = ({player, players}) => {
 
   return (
     <>
-      { clickStart
+      { 
+      player.name === "Moderator"
+      ?
+      <div onClick={handleStartClick} className="bg-[#269754] absolute bottom-0 left-0 right-0 color-white py-3 px-6 md:w-[50%] m-auto w-full border border-navy rounded">Start Game</div>
+      :
+      clickStart
       ?
       <div onClick={handleStartClick} className="bg-mafiaRed absolute bottom-0 left-0 right-0 text-white py-3 px-6 md:w-[50%] w-full border border-navy rounded">Not Ready</div> 
       : 

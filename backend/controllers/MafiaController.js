@@ -52,14 +52,27 @@ const createPlayer = asyncHandler(async (req, res) => {
         const currentServer = await gameServer.findOne({serverCode:req.params.serverCode})
         if (currentServer) {
             console.log("Creating Player...")
-            const player = await mafiaPlayer.create({
-                serverCode: req.params.serverCode,
-                playerID: generatePlayerID(),
-                role: 'civilian',
-                name: req.body.name,
-                status: false,
-                isAlive: true,
-            })
+            if(req.body.name){
+                if(req.body.name === "Moderator"){
+                    const player = await mafiaPlayer.create({
+                        serverCode: req.params.serverCode,
+                        playerID: generatePlayerID(),
+                        role: 'Moderator',
+                        name: req.body.name,
+                        status: false,
+                        isAlive: true,
+                    })
+                }
+            } else {
+                const player = await mafiaPlayer.create({
+                    serverCode: req.params.serverCode,
+                    playerID: generatePlayerID(),
+                    role: 'Civilian',
+                    name: req.body.name,
+                    status: false,
+                    isAlive: true,
+                })
+            }
             const players = currentServer.players.concat(player)
             const server = await gameServer.updateOne({serverCode:req.params.serverCode}, {$set:{players:players}})
             res.status(200).json({message: `Created player successfully`, player, status: 'OK'})
