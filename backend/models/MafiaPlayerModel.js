@@ -27,4 +27,4 @@ const MafiaPlayerSchema = mongoose.Schema({
     },
 })
 
-module.exports = mongoose.model('Mafia', MafiaPlayerSchema)
+module.exports = mongoose.model('MafiaPlayer', MafiaPlayerSchema)
