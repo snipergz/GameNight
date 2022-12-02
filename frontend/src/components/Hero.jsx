@@ -10,7 +10,7 @@ const Hero = ({ pic, title, titleColor, btnColor, btnOutline }) => {
               {title}
             </span>
           </h1>
-          <h2 className="text-white text-xl lg:text-2xl my-4">
+          <h2 className="text-white text-xl text-center lg:text-left lg:text-2xl my-4">
             An Anywhere and Anytime Solution that brings life to small group
             environments
           </h2>
