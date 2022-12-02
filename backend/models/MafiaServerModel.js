@@ -14,4 +14,4 @@ const GameServerSchema = mongoose.Schema({
     },
 })
 
-module.exports = mongoose.model('GameServer', GameServerSchema)
+module.exports = mongoose.model('MafiaGameServer', GameServerSchema)

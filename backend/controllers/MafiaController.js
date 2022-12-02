@@ -52,17 +52,30 @@ const createPlayer = asyncHandler(async (req, res) => {
         const currentServer = await gameServer.findOne({serverCode:req.params.serverCode})
         if (currentServer) {
             console.log("Creating Player...")
-            const player = await mafiaPlayer.create({
-                serverCode: req.params.serverCode,
-                playerID: generatePlayerID(),
-                role: 'civilian',
-                name: req.body.name,
-                status: false,
-                isAlive: true,
-            })
+            if(req.body.name){
+                if(req.body.name === "Moderator"){
+                    const player = await mafiaPlayer.create({
+                        serverCode: req.params.serverCode,
+                        playerID: generatePlayerID(),
+                        role: 'Moderator',
+                        name: req.body.name,
+                        status: false,
+                        isAlive: true,
+                    })
+                }
+            } else {
+                const player = await mafiaPlayer.create({
+                    serverCode: req.params.serverCode,
+                    playerID: generatePlayerID(),
+                    role: 'Civilian',
+                    name: req.body.name,
+                    status: false,
+                    isAlive: true,
+                })
+            }
             const players = currentServer.players.concat(player)
             const server = await gameServer.updateOne({serverCode:req.params.serverCode}, {$set:{players:players}})
-            res.status(200).json({message: `Created player successfully`, player: {player}, status: 'OK'})
+            res.status(200).json({message: `Created player successfully`, player, status: 'OK'})
             console.log(player)
             console.log(`(Backend) Successfully added ${req.body.name} to the Server: ${req.params.serverCode}`)
         } else {
@@ -92,15 +105,18 @@ const deletePlayer = asyncHandler(async (req, res) => {
     }
 })
 
-// @desc    Update Player
+// @desc    Update Player's Status to true or false (ready or not ready), 
 // @route   Update /gamenight/server/mafia/player/:serverCode/:playerID
 // @access  Public
 const updatePlayer = asyncHandler(async (req, res) => {
     try {
         console.log(`Finding player with PlayerID: ${req.params.playerID}...`)
-        await gameServer.updateOne({serverCode:req.params.serverCode, "players.playerID":req.params.playerID}, {$set:{"players.$.status":true}})
-        console.log(`Updated ${req.params.playerID}'s status to True`)
-        res.status(200).json({message: `Updated player with playerID: ${req.params.playerID} status to true`})
+        await gameServer.updateOne({serverCode:req.params.serverCode, "players.playerID":req.params.playerID}, {$set:{"players.$.status":req.body.status}})
+        const server = await gameServer.findOne({serverCode:req.params.serverCode})
+        const players = server.players.filter(plr => plr.playerID == req.params.playerID)   
+        const player = players[0]
+        console.log(`Updated ${req.params.playerID}'s status to ${req.body.status}`)
+        res.status(200).json({message: `Updated player with playerID: ${req.params.playerID} status to true`, player})
     } catch (error) {
         res.status(400)
         console.log(error)
@@ -139,25 +155,42 @@ const createServer = asyncHandler(async (req, res) => {
         const server = await gameServer.create({
             serverCode: serverCode,
             players: [],
-            status: true
+            status: false
         })
-        console.log("Creating Moderator Player Object...")
-        const player = await mafiaPlayer.create({
-            serverCode: serverCode,
-            playerID: generatePlayerID(),
-            role: 'moderator',
-            name: "Moderator",
-            status: true,
-            isAlive: false,
-        })
-        await gameServer.updateOne({serverCode:serverCode}, {$set:{players:player}})
-        const updatedServer = await gameServer.findOne({serverCode:serverCode})
-        res.status(200).json(updatedServer)
+        // console.log("Creating Moderator Player Object...")
+        // const player = await mafiaPlayer.create({
+        //     serverCode: serverCode,
+        //     playerID: generatePlayerID(),
+        //     role: 'moderator',
+        //     name: "Moderator",
+        //     status: true,
+        //     isAlive: false,
+        // })
+        // await gameServer.updateOne({serverCode:serverCode}, {$set:{players:player}})
+        // const updatedServer = await gameServer.findOne({serverCode:serverCode})
+        res.status(200).json(server)
         console.log(`Successfully Created a Game Server for the game: ${req.body.game}`)
     } catch (error) {
         console.log(error)
         res.status(400)
         throw new Error('Incorrect Request Body')
+    }
+})
+
+// @desc    Update Server 
+// @route   Post /gamenight/server/mafia/:serverCode
+// @access  Public
+const updateServer = asyncHandler(async (req, res) => {
+    try {
+        console.log(`Finding server with serverCode: ${req.params.serverCode}...`)
+        await gameServer.updateOne({serverCode:req.params.serverCode}, {$set:{status:true}})
+        const server = await gameServer.findOne({serverCode:req.params.serverCode})
+        console.log(`Updated ${req.params.serverCode}'s status to True`)
+        res.status(200).json({message: `Updated server with serverCode: ${req.params.serverCode} status to true`, server})
+    } catch (error) {
+        res.status(400)
+        console.log(error)
+        throw new Error('Failed updating server')
     }
 })
 
@@ -177,5 +210,5 @@ const deleteServer = asyncHandler(async (req, res) => {
 })
 
 module.exports = {
-    getServer, createServer, deleteServer, getPlayer, createPlayer, deletePlayer, updatePlayer
+    getServer, createServer, deleteServer, updateServer, getPlayer, createPlayer, deletePlayer, updatePlayer
 } 

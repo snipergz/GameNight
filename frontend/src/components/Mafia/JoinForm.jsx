@@ -1,6 +1,20 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { SocketContext } from "../../context/socket";
+
 const JoinForm = ({ handleJoinClick }) => {
+  // WebSocket Initialization
+  const socket = useContext(SocketContext);
+  // console.log(socket)
+  // console.log(`Active: ${socket.active}`)
+
+  const navigate = useNavigate();
+
+  const sessionServer = JSON.parse(sessionStorage.getItem("server"));
+  const sessionPlayers = JSON.parse(sessionStorage.getItem("players"));
+  const sessionPlayer = JSON.parse(sessionStorage.getItem("player"));
+
   const joinGame = (e) => {
     e.preventDefault();
     const playerName = e.target[0].value;
@@ -10,28 +24,35 @@ const JoinForm = ({ handleJoinClick }) => {
     const joinServer = async () => {
       try {
         console.log("...sending ajax create player post");
-        const result = await axios.post(
+        const player = await axios.post(
           `http://localhost:8080/gamenight/server/mafia/player/${serverCode}`,
           {
             name: playerName,
           }
         );
-        if (result.data.status === "OK") {
-          console.log("Storing server to localStorage...");
+        if (player.data.status === "OK") {
           const server = await axios.get(
             `http://localhost:8080/gamenight/server/mafia/${serverCode}`
           );
-          console.log(JSON.stringify(server));
-          localStorage.setItem("server", JSON.stringify(server));
-          localStorage.setItem("player", JSON.stringify(result.data));
-          console.log("LocalStorage Successfully Set...");
+
+          sessionStorage.setItem("player", JSON.stringify(player.data.player));
+          sessionStorage.setItem("server", JSON.stringify(server.data));
+          sessionStorage.setItem(
+            "players",
+            JSON.stringify(server.data.players)
+          );
+
+          socket.emit(
+            "join-room",
+            `\nCLIENT_SIDE_MESSAGE: Player Created, Joining Room ${serverCode}`,
+            server.data,
+            player.data
+          );
           setIsError(false);
-          window.location = `/mafia/server/play`;
-        } else {
-          console.log("LocalStorage Failed...");
+          navigate("/mafia/server/lobby");
         }
       } catch (e) {
-        console.log("...error");
+        console.log(e);
         setIsError(true);
       }
     };
