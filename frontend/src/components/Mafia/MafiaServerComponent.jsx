@@ -7,7 +7,6 @@ import JoinForm from "./JoinForm";
 const MafiaServerComponent = ({ gameName }) => {
   const [clickJoinServer, setJoin] = useState(false);
   const handleJoinClick = () => setJoin(!clickJoinServer);
-
   const createGame = (e) => {
     e.preventDefault();
 
