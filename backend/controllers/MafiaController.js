@@ -52,27 +52,14 @@ const createPlayer = asyncHandler(async (req, res) => {
         const currentServer = await gameServer.findOne({serverCode:req.params.serverCode})
         if (currentServer) {
             console.log("Creating Player...")
-            if(req.body.name){
-                if(req.body.name === "Moderator"){
-                    const player = await mafiaPlayer.create({
-                        serverCode: req.params.serverCode,
-                        playerID: generatePlayerID(),
-                        role: 'Moderator',
-                        name: req.body.name,
-                        status: false,
-                        isAlive: true,
-                    })
-                }
-            } else {
-                const player = await mafiaPlayer.create({
-                    serverCode: req.params.serverCode,
-                    playerID: generatePlayerID(),
-                    role: 'Civilian',
-                    name: req.body.name,
-                    status: false,
-                    isAlive: true,
-                })
-            }
+            const player = await mafiaPlayer.create({
+                serverCode: req.params.serverCode,
+                playerID: generatePlayerID(),
+                role: req.body.name === "Moderator" ? "Moderator" : "Civillian",
+                name: req.body.name,
+                status: false,
+                isAlive: true,
+            })
             const players = currentServer.players.concat(player)
             const server = await gameServer.updateOne({serverCode:req.params.serverCode}, {$set:{players:players}})
             res.status(200).json({message: `Created player successfully`, player, status: 'OK'})
@@ -110,17 +97,44 @@ const deletePlayer = asyncHandler(async (req, res) => {
 // @access  Public
 const updatePlayer = asyncHandler(async (req, res) => {
     try {
-        console.log(`Finding player with PlayerID: ${req.params.playerID}...`)
-        await gameServer.updateOne({serverCode:req.params.serverCode, "players.playerID":req.params.playerID}, {$set:{"players.$.status":req.body.status}})
-        const server = await gameServer.findOne({serverCode:req.params.serverCode})
-        const players = server.players.filter(plr => plr.playerID == req.params.playerID)   
-        const player = players[0]
-        console.log(`Updated ${req.params.playerID}'s status to ${req.body.status}`)
-        res.status(200).json({message: `Updated player with playerID: ${req.params.playerID} status to true`, player})
+        // if(req.body.status){
+            console.log(`\nFinding player with PlayerID to update their status: ${req.params.playerID}...`)
+            await gameServer.updateOne({serverCode:req.params.serverCode, "players.playerID":req.params.playerID}, {$set:{"players.$.status":req.body.status}})
+            const server = await gameServer.findOne({serverCode:req.params.serverCode})
+            const players = server.players.filter(plr => plr.playerID == req.params.playerID)   
+            const player = players[0]
+            console.log(`Updated ${player.name}'s status to ${req.body.status}\n`)
+            res.status(200).json({message: `Updated player with playerID: ${req.params.playerID} status to true`, player})
+        // } else if(req.body.role){
+        //     console.log(`\nFinding player with PlayerID to update their role: ${req.params.playerID}...`)
+        //     await gameServer.updateOne({serverCode:req.params.serverCode, "players.playerID":req.params.playerID}, {$set:{"players.$.role":req.body.role}})
+        //     const server = await gameServer.findOne({serverCode:req.params.serverCode})
+        //     const players = server.players.filter(plr => plr.playerID == req.params.playerID)   
+        //     const player = players[0]
+        //     console.log(`Updated ${player.name}'s role to ${req.body.role}\n`)
+        //     res.status(200).json({message: `Updated player with playerID: ${req.params.playerID} role`, player})
+        // } else {
+        //     res.status(400)
+        // }
     } catch (error) {
         res.status(400)
         console.log(error)
         throw new Error('Failed updating player')
+    }
+})
+
+const updatePlayerRole = asyncHandler(async (req, res) => {
+    try {
+        console.log(`\nFinding player with PlayerID to update their role: ${req.params.playerID}...`)
+        await gameServer.updateOne({serverCode:req.params.serverCode, "players.playerID":req.params.playerID}, {$set:{"players.$.role":req.params.role}})
+        const server = await gameServer.findOne({serverCode:req.params.serverCode})
+        const players = server.players.filter(plr => plr.playerID == req.params.playerID)   
+        const player = players[0]
+        console.log(`Updated ${player.name}'s role to ${req.params.role}\n`)
+        res.status(200).json({message: `Updated player with playerID: ${req.params.playerID} role`, player})
+    } catch (error) {
+        res.status(400)
+        console.log(error)
     }
 })
 
@@ -182,11 +196,17 @@ const createServer = asyncHandler(async (req, res) => {
 // @access  Public
 const updateServer = asyncHandler(async (req, res) => {
     try {
-        console.log(`Finding server with serverCode: ${req.params.serverCode}...`)
-        await gameServer.updateOne({serverCode:req.params.serverCode}, {$set:{status:true}})
-        const server = await gameServer.findOne({serverCode:req.params.serverCode})
-        console.log(`Updated ${req.params.serverCode}'s status to True`)
-        res.status(200).json({message: `Updated server with serverCode: ${req.params.serverCode} status to true`, server})
+        if(req.body.status){
+            // Or we are updating the status of the server to be true or false (Started/Completed)
+            console.log(`Finding server with serverCode: ${req.params.serverCode}...`)
+            await gameServer.updateOne({serverCode:req.params.serverCode}, {$set:{status:true}})
+            const server = await gameServer.findOne({serverCode:req.params.serverCode})
+            console.log(`Updated ${req.params.serverCode}'s status to True`)
+            res.status(200).json({message: `Updated server with serverCode: ${req.params.serverCode} status to true`, server})
+        } else {
+            res.status(400)
+            console.log("Bad Request")
+        }
     } catch (error) {
         res.status(400)
         console.log(error)
@@ -210,5 +230,5 @@ const deleteServer = asyncHandler(async (req, res) => {
 })
 
 module.exports = {
-    getServer, createServer, deleteServer, updateServer, getPlayer, createPlayer, deletePlayer, updatePlayer
+    getServer, createServer, deleteServer, updateServer, getPlayer, createPlayer, deletePlayer, updatePlayer, updatePlayerRole
 } 
