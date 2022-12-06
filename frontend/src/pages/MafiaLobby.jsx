@@ -174,7 +174,7 @@ const MafiaLobby = () => {
 
       sessionStorage.setItem('players', JSON.stringify(players))
 
-      // navigate('/mafia/server/play')
+      navigate('/mafia/server/play')
     } catch (error) {
       setError(error)
     }
