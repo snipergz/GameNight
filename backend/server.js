@@ -12,6 +12,8 @@ const io = require('socket.io')(8000, {
     }
 })
 
+const mafiaGameServer = require('../backend/models/MafiaServerModel')
+
 // Connecting to MongoDB
 connectDB()
 
@@ -63,6 +65,32 @@ io.on("connection", socket => {
     socket.on("mafia-server-connect", msg => {
         console.log(msg)
         // console.log("SERVER SIDE: SUCCESSFULLY received message from mafia server component\n")
+    })
+
+    socket.once("receive-shuffle-roles", async (shuffledRoles, player, players) => {
+        try {
+            console.log("SERVER_SIDE_MESSAGE: Shuffling and assigning Roles\n")
+            const playerReceived = JSON.parse(player)
+            if(playerReceived.name === "Moderator" && players.length > 0){
+                socket.join(playerReceived.serverCode)
+                console.log("Shuffling")
+                console.log("----------------------------------------------")
+                console.log(shuffledRoles)
+                console.log("----------------------------------------------")
+                for(let i = 1; i < players.length; i++){
+                    try {
+                        await mafiaGameServer.updateOne({serverCode:players[i].serverCode, "players.playerID":players[i].playerID}, {$set:{"players.$.role":shuffledRoles[i - 1]}})
+                        console.log(`Updated ${players[i].name}'s role to ${shuffledRoles[i - 1]}\n`)
+                    } catch (error) {
+                        console.log(error)
+                    }
+                }
+                const server = await mafiaGameServer.findOne({serverCode:playerReceived.serverCode})
+                io.to(playerReceived.serverCode).emit("shuffle-complete-start-game", JSON.stringify(server), JSON.stringify(server.players))
+            }
+        } catch (error) {
+            // console.log("Could not parse player object")
+        }
     })
 
 })
