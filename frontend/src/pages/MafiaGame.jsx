@@ -34,9 +34,13 @@ function MafiaGame() {
             ?
             <div>
               <h2 className='text-3xl mb-4'>Role: Moderator</h2> 
-              <div className='grid grid-cols-3 gap-4 p-4'>
-                {sessionPlayers.map(p => {
-                  return <img key={p.playerID} alt="moderator card" src={Civillian} className="m-auto"/>
+              <div className='grid grid-cols-2 sm:grid-cols-3 gap-4 p-4'>
+                {sessionPlayers.filter(plr => plr.name !== "Moderator").map(p => {
+                  return <img key={p.playerID} alt="player's role card" src={p.role === "Mafia" ? Mafia
+                                                                      :  p.role === "Doctor" ? Doctor
+                                                                      :  p.role === "Detective" ? Detective
+                                                                      : Civillian} 
+                                                                    className="m-auto"/>
                 })}
               </div>
             </div>
