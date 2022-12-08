@@ -4,6 +4,7 @@ import Mafia from './pages/Mafia';
 import Taboo from './pages/Taboo';
 import Server from './pages/Server';
 import MafiaServer from './pages/MafiaServer';
+import Mystery from './pages/MysteryGame';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path='/taboo' element={<Taboo/>}/>
           <Route path='/mafia/server' element={<Server gameName={"Mafia"}/>}/>
           <Route path='/mafia/server/play' element={<MafiaServer/>}/>
+          <Route path='/mystery' element ={<Mystery/>}/>
         </Routes>
       </div>
     </Router>
