@@ -23,4 +23,4 @@ const MurderMysteryPlayerSchema = mongoose.Schema({
     },
 })
 
-modeule.exports = mongoose.model('Mafia', MurderMysteryPlayerSchema)
+module.exports = mongoose.model('MurderMysteryGamePlayer', MurderMysteryPlayerSchema)
