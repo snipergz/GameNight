@@ -4,6 +4,14 @@ const gameServer = require('../models/MurdermysteryServerModel')
 const murderMysteryPlayer = require('../models/MurderMysteryPlayerModel');
 const { restart } = require('nodemon');
 
+// choice array
+const firstchoice = [{o:'the red door', r:'On the otherside, you see that both doors lead to the same room. You wonder why it was designed this way.'}, {o:'the blue door', r:'On the otherside, you see that both doors lead to the same room. You wonder why it was designed this way.'}]
+
+const lastchoice = [{o:'go down the corridor', r:'You make a break for the corridor as the room fills up. It is long and make various turn though you reach the ends to find that there is no exit. It is too late to go back now. The water is too deep to wade or swim through fast enough. You drown.'}, {o:'garbage chute', r:'You enter the garbage chute and try to slide down though you can feel water pouring down just as you make it to the bottom. You see the reverse silhouette of a door as lit by light from the other side. You rush through it to see a dock leading to a small boat. You sprint through the dock, start the boat, and escape the island and mansion.'}]
+
+const cor = [{o:'the first option', r:'the first result'}, {o:'the second option', r:'the second result'}, {o:'the third option', r:'the third result'}]
+let updateint = 0
+
 //General Functions
 function generateServerCode(){
     // Generate a random UUID
@@ -36,8 +44,10 @@ function chooseRooms(){
 const getPlayer = asyncHandler(async (req, res) => {
     try{
         console.log(`Finding player with PlayerID: ${req.params.playerID}...`)
-        const server = await gameServer.findOne({serverCode:req.params.serverCode}) 
+        const server = await gameServer.findOne({serverCode:req.params.serverCode})
+        console.log(server)
         const player = server.players.find(plr => plr.playerID === req.params.playerID)
+        console.log(player)
         res.status(200).json(player)
         console.log(player)
     }
@@ -103,9 +113,9 @@ const deletePlayer = asyncHandler(async (req, res) => {
 const updatePlayer = asyncHandler(async (req, res) => {
     try {
         console.log(`Finding player with PlayerID: ${req.params.playerID}...`)
-        await gameServer.updateOne({serverCode:req.params.serverCode, "players.playerID":req.params.playerID})
+        await gameServer.updateOne({serverCode:req.params.serverCode, "players.playerID":req.params.playerID}, {$set:{"players.$.vote":req.body.vote}})
         console.log(`Updated ${req.params.playerID}'s status to True`)
-        res.status(200).json({message: `Updated player with playerID: ${req.params.playerID} status to true`})
+        res.status(200).json({message: `Updated player with playerID: ${req.params.playerID} vote`})
     } catch (error) {
         res.status(400)
         console.log(error)
@@ -122,10 +132,12 @@ const getServer = asyncHandler(async (req, res) => {
     try {
         console.log(`Finding Server with serverCode: ${req.params.serverCode}...`)
         //for the this to actaull work proper
-        const server = await gameServer.findOne({serverCode:req.params.serverCode})
+        //const server = await gameServer.findOne({serverCode:req.params.serverCode})
         //return all the gameServers for TS
-        //const server = await gameServer.find()
+        const server = await gameServer.find()
         // console.log(server)
+        console.log(cor[0].o)
+        console.log(cor[0].r)
         res.status(200).json(server)
     } catch (error) {
         console.log(error)
@@ -134,7 +146,7 @@ const getServer = asyncHandler(async (req, res) => {
     }
 })
 
-// @desc    Create Server 
+// @desc    Create Server
 // @route   Post /gamenight/server/murderMystery
 // @access  Public
 const createServer = asyncHandler(async (req, res) => {
@@ -169,13 +181,21 @@ const createServer = asyncHandler(async (req, res) => {
     }
 })
 
-// @desc    Update Server
+// @desc    Update Server                                                               ////////////////////////////////////////////////HERE//////////////////////////////////////////
 // @route   Update /gamenight/server/murderMystery/:serverCode
 // @access  Public
-const UpdateServer = asyncHandler(async (req, res) =>{
-    try{
+const updateServer = asyncHandler(async (req, res) =>{
 
-        res.status(200).json()
+    try{
+        
+        if(updateint == 0){
+            await gameServer.updateOne({serverCode:req.params.serverCode, "room":"You find yourself in a dimly lit room. You and a few others are all coming to. Before you can speak, everyones gaze is drawn to the glow of the two doors which stand before you all.", "choiceOne":firstchoice[0].o, "choiceTwo":firstchoice[1].o})
+        }
+
+        await gameServer.updateOne({serverCode:req.params.serverCode, "room":"", "choiceOne":"one", "choiceTwo":"two", "choiceThree":"three"})
+        
+        
+        res.status(200).json({message: `Updated server with serverCode: ${req.params.serverCode} status to true`})
     } catch(error){
         res.status(400)
         throw new Error('Incorrect Request Body')
@@ -198,5 +218,5 @@ const deleteServer = asyncHandler(async (req, res) => {
 })
 
 module.exports = {
-    getServer, createServer, deleteServer, getPlayer, createPlayer, deletePlayer, updatePlayer
+    getServer, createServer, updateServer, deleteServer, getPlayer, createPlayer, deletePlayer, updatePlayer
 } 
