@@ -3,7 +3,7 @@ import Choice from '../components/Mystery/MysteryGameChoice'
 import Room from "../assets/Mystery/r.png";
 import Navbar from '../components/Navbar';
 
-const Mystery = () => {
+const MysteryGame = () => {
     return (
         <>
         <Navbar />
@@ -15,4 +15,4 @@ const Mystery = () => {
     )
 }
 
-export default Mystery
+export default MysteryGame;
