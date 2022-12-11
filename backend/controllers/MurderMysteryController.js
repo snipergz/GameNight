@@ -12,6 +12,25 @@ const lastchoice = [{o:'go down the corridor', r:'You make a break for the corri
 const cor = [{o:'the first option', r:'the first result'}, {o:'the second option', r:'the second result'}, {o:'the third option', r:'the third result'}]
 let updateint = 0
 
+//////
+let turn = 0;
+let thisset = 0;
+let def = {C:'choice', R:'result', id:20};
+let testdef = {C:'choice', R:'You and several others wake up in what appears to be a mansion. what do you do?', id:20};
+
+let thedata = [{C:'C0', R:'R0', id:0}, {C:'C1', R:'R1', id:1}, {C:'C2', R:'R2', id:2}, 
+			   {C:'C3', R:'R3', id:3}, {C:'C4', R:'R4', id:4}, {C:'C5', R:'R5', id:5}, 
+			   {C:'C6', R:'R6', id:6}, {C:'C7', R:'R7', id:7}, {C:'C8', R:'R8', id:8}];
+
+let testdata = [{C:'Go through the red door', R:'You are now in the red room, what do you do now?', id:0}, {C:'Go through the blue door', R:'You are now in the blue room, what do you do now?', id:1}, {C:'Go through the green door', R:'You are now in the green room, what do you do now?', id:2}, 
+			   {C:'Go through the triangle door', R:'You are now in the triangle room, what do you do now?', id:3}, {C:'Go through the squre door', R:'You are now in the square room, what do you do now?', id:4}, {C:'Go through the pentagon door', R:'You are now in the pentagon room, what do you do now?', id:5}, 
+			   {C:'Go through the past door', R:'You are now in the past room, what do you do now?', id:6}, {C:'Go through the present door', R:'You are now in the present room, what do you do now?', id:7}, {C:'Go through the future door', R:'You are now in the future room, what do you do now?', id:8}];
+
+let winset = [{C:'congratulations!', R:'', id:997}, {C:'You win!', R:'', id:998}, {C:'Have fun?', R:'', id:999}];
+
+let loseset = [{C:'Sorry!', R:'', id:997}, {C:'You Died!', R:'', id:998}, {C:'It was the wrong door', R:'', id:999}];
+//////
+
 //General Functions
 function generateServerCode(){
     // Generate a random UUID
@@ -132,12 +151,10 @@ const getServer = asyncHandler(async (req, res) => {
     try {
         console.log(`Finding Server with serverCode: ${req.params.serverCode}...`)
         //for the this to actaull work proper
-        //const server = await gameServer.findOne({serverCode:req.params.serverCode})
+        const server = await gameServer.findOne({serverCode:req.params.serverCode})
         //return all the gameServers for TS
-        const server = await gameServer.find()
+        //const server = await gameServer.find()
         // console.log(server)
-        console.log(cor[0].o)
-        console.log(cor[0].r)
         res.status(200).json(server)
     } catch (error) {
         console.log(error)
@@ -181,7 +198,7 @@ const createServer = asyncHandler(async (req, res) => {
     }
 })
 
-// @desc    Update Server                                                               ////////////////////////////////////////////////HERE//////////////////////////////////////////
+// @desc    Update Server
 // @route   Update /gamenight/server/murderMystery/:serverCode
 // @access  Public
 const updateServer = asyncHandler(async (req, res) =>{
@@ -217,6 +234,35 @@ const deleteServer = asyncHandler(async (req, res) => {
     }
 })
 
+// @desc    initail test for MP
+// @route   get /gamenight/server/data
+// @access  Public
+const testinitdata = asyncHandler(async (req, res) => {
+	let result = [[testdef], [testdata[thisset], testdata[thisset+1], testdata[thisset+2]]];
+	thisset+=3;
+	if(thisset == 9)
+		thisset = 0;
+	res.json(result);
+})
+
+// @desc    mext test for MP
+// @route   post /gamenight/server/next
+// @access  Public
+const testnextdata = asyncHandler(async (req, res) => {
+	let result = [testdata[thisset], testdata[thisset+1], testdata[thisset+2]];
+	thisset+=3;
+	if(thisset == 9)
+		thisset = 0;
+	turn+=1;
+	if((req.body.id == 2) |(req.body.id == 5) | (req.body.id == 8)){
+		result = loseset;
+		thisset = 0}
+	if(turn == 3){
+		result = winset;
+		thisset = 0;}
+	res.json(result);
+})
+
 module.exports = {
-    getServer, createServer, updateServer, deleteServer, getPlayer, createPlayer, deletePlayer, updatePlayer
+    getServer, createServer, updateServer, deleteServer, getPlayer, createPlayer, deletePlayer, updatePlayer, testinitdata, testnextdata
 } 

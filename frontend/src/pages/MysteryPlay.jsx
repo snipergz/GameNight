@@ -2,39 +2,23 @@
 import { useState, useEffect} from 'react';
 import axios from 'axios';
 
-function TP(){
+function MysteryPartyGamePage(){
   const [data, setData] = useState([]);
   const [sata, setSata] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  console.log('rendering app');
-
-  //let def = {};
-  let dan = [];
-  let crash = 'this works';
-
   useEffect(() => {
     const fetch = async() =>{
     try{
-      console.log('sending ajax calls');
       setLoading(true);
-      const result = await axios('http://localhost:8081/data');
-      console.log('data has returned');
-      console.log(result);
+      const result = await axios('http://localhost:8080/gamenight/server/data');
       setLoading(false);
       setData(result.data[1]);
       setSata(result.data[0]);
-      //let def = result.data[0];
-      console.log(result.data[0]);
-      console.log(sata);
-      console.log(result.data[1]);
-      console.log(data);
-      //console.log(def);
-      console.log('it crashed');
   } catch(error){
     setLoading(false);
-    setError('unable to retreie data from server, plese try again');
+    setError('data not retreied');
   }
 };
 fetch();
@@ -43,54 +27,21 @@ fetch();
 
 const handleClick = (id, e) =>{
   console.log('you clicked', id);
-  const del = async() =>{
+  const next = async() =>{
     try{
       console.log('sending ajax del post');
-      const result = await axios.post('http://localhost:8081/next', {
+      const result = await axios.post('http://localhost:8080/gamenight/server/next', {
         id:id
       });
-      //if(result.data.status == 'OK'){
-        //console.log('...delete succeeded');
         setData(result.data);
         setSata(data.filter(item => item.id === id));
-        //setData(data.R);
-     // }else{
-       // console.log('...delete failed')
-     // }
-      //console.log(data);
-      //setData(result.data[1]);
   } catch(error){
     setError('delete failed');
   }
 };
-del();
+next();
 };
 
-const handleTop = (id, e) =>{
-  console.log('you clicked', id);
-  const fel = async() =>{
-    try{
-      console.log('sending ajax del post');
-      const result = await axios.post('http://localhost:8080/delete', {
-        id:id
-      });
-      if(result.data.status == 'OK'){
-        console.log('...delete succeeded');
-        setData(data.filter(item => item.id === id));
-        //setData(data.R);
-      }else{
-        console.log('...delete failed')
-      }
-      console.log(data);
-      //setData(result.data[1]);
-  } catch(error){
-    setError('delete failed');
-  }
-};
-fel();
-};
-
-console.log('...rendering');
 
 return(
   <div className="container text-white">
@@ -110,18 +61,18 @@ return(
           <h2 className="text-center ">
             {sata.map(({C, R, id}) =>
         <div className="col-md-4" key={id}>
-          <h5 className="text-center" onClick={e => handleClick(id, e)}>
+          <h5 className="text-left" onClick={e => handleClick(id, e)}>
              <div>{R}</div>
              <div hidden>{R}</div>
           </h5>
         </div>)}
           </h2>
-          <h3 className="text-center">
-            
-          </h3>
+          <div>
+          <img src="https://i.imgur.com/IFCmBO4l.png" class="center"/>
+          </div>
       {data.map(({C, R, id}) =>
         <div className="col-md-4 text-white" key={id}>
-          <h5 className="text-center" onClick={e => handleClick(id, e)}>
+          <h5 className="text-right" onClick={e => handleClick(id, e)}>
              <div className='text-white'>{C} </div>
              <div hidden>{R}</div>
           </h5>
