@@ -2,7 +2,7 @@
 import { useState, useEffect} from 'react';
 import axios from 'axios';
 
-function TP(){
+function MysteryPartyGamePage(){
   const [data, setData] = useState([]);
   const [sata, setSata] = useState([]);
   const [loading, setLoading] = useState(true);
