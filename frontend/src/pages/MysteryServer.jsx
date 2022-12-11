@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import mystPic from "../assets/MurderMystery/game3.png";
 import Navbar from "../components/Navbar";
 import JoinForm from "./JoinForm";
