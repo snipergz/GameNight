@@ -15,7 +15,7 @@ const Hero = () => {
           <div className="flex flex-row gap-5 w-full justify-center xl:justify-start">
             <a
               className="bg-mafiaRed text-white py-3 px-6 min-w-[145px] border border-navy rounded"
-              href="#mafia-characters"
+              href="#mafia-play-btn"
             >
               Let's Play 👇
             </a>

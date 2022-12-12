@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import mafiaCard1 from "../../assets/Mafia/mafia-card-1.jpg";
+import taboo from "../../assets/Taboo/r.png"
+import mystery from "../../assets/MurderMystery/game3.png"
 
 const Games = () => {
   return (
@@ -25,7 +27,7 @@ const Games = () => {
           </div>
         </div>
         <div className="flex flex-col rounded-lg shadow-lg bg-white max-w-sm">
-          <img src={mafiaCard1} alt="" />
+          <img src={taboo} alt="" />
           <div className="p-4">
             <h3 className="text-2xl">Taboo</h3>
             <p className="mb-4">
@@ -42,9 +44,9 @@ const Games = () => {
           </div>
         </div>
         <div className="flex flex-col rounded-lg shadow-lg bg-white max-w-sm">
-          <img src={mafiaCard1} alt="" />
+          <img src={mystery} alt="" />
           <div className="p-4">
-            <h3 className="text-2xl">Mystery</h3>
+            <h3 className="text-2xl">Murder Mystery</h3>
             <p className="mb-4">
               Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis,
               voluptatibus nemo iste quia delectus tenetur expedita atque
@@ -52,7 +54,7 @@ const Games = () => {
             </p>
             <Link
               className="block bg-darkPurple text-white py-3 px-6 w-[50%] text-center mx-auto border border-navy rounded"
-              to="/mafia"
+              to="/mystery"
             >
               Play Game
             </Link>

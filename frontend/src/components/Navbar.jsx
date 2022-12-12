@@ -52,12 +52,12 @@ const Navbar = () => {
           >
             Mystery
           </Link>
-          <button className="hover:text-neonBlue text-left pb-2 md:pr-3 lg:pb-0">
+          {/* <button className="hover:text-neonBlue text-left pb-2 md:pr-3 lg:pb-0">
             Sign In
           </button>
           <button className="hover:text-neonPink text-left pb-2 md:pr-3 lg:pb-0">
             Sign Up
-          </button>
+          </button> */}
         </div>
       </ul>
     </>

@@ -43,6 +43,7 @@ module.exports = {
       darkPurple: "#9600ff",
       mafiaRed: "#c9291a",
       mysteryYellow: "#F1E178",
+      tabooPink: "#fb756b"
     },
     dropShadow: {
       titleLeft: ["0 0 50px rgb(238,0,255)", "0 0 4px rgb(0,162,255)"],
