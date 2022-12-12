@@ -25,6 +25,7 @@ function App() {
               <Route path="/home" element={<Home />} />
               <Route path="/mafia" element={<Mafia />} />
               <Route path="/taboo" element={<Taboo />} />
+              <Route path="/MysteryPlay" element={<MysteryPlay/>} />
               <Route
                 path="/mafia/server"
                 element={<MafiaServer gameName={"Mafia"} />}
