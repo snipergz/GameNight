@@ -4,13 +4,18 @@ import Mafia from './pages/Mafia';
 import Taboo from './pages/Taboo';
 import Mystery from "./pages/Mystery";
 import MafiaServer from './pages/MafiaServer';
+
+import Mystery from './pages/MysteryGame';
+import MysteryPlay from './pages/MysteryPlay';
 import MafiaLobby from './pages/MafiaLobby';
 import {SocketContext, socket} from '../src/context/socket';
 import MafiaGame from './pages/MafiaGame';
 
+
 function App() {
   return (
     <>
+
     <SocketContext.Provider value={socket}>  
       <Router>
         <div>
@@ -23,11 +28,11 @@ function App() {
             <Route path='/mafia/server/lobby' element={<MafiaLobby/>}/>
             <Route path='/mafia/server/play' element={<MafiaGame/>}/>
             <Route path="/mystery" element={<Mystery />} />
+            <Route path='/MysteryPlay' element ={<MysteryPlay/>}/>
           </Routes>
         </div>
       </Router>
     </SocketContext.Provider>
-
     </>
   );
 }
