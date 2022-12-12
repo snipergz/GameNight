@@ -42,7 +42,7 @@ module.exports = {
       navy: "rgb(17 24 39);",
       darkPurple: "#9600ff",
       mafiaRed: "#c9291a",
-      mysteryYellow: "#F1E178",
+      mysteryYellow: "#cab64f",
       tabooPink: "#fb756b"
     },
     dropShadow: {

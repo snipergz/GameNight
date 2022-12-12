@@ -25,7 +25,7 @@ const Hero = ({ pic, title, titleColor, btnColor, btnOutline }) => {
               Let's Play 👇
             </a>
             <a
-              className={`bg-white text-darkPurple py-3 px-6 min-w-[145px] border ${btnOutline} rounded`}
+              className={`bg-white text-mysteryYellow py-3 px-6 min-w-[145px] border ${btnOutline} rounded`}
               href="#about"
             >
               Learn More
