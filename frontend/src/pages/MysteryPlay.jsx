@@ -5,8 +5,11 @@ import axios from 'axios';
 function MysteryPartyGamePage(){
   const [data, setData] = useState([]);
   const [sata, setSata] = useState([]);
+  const [picd, setPicd] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  let pics = [];
 
   useEffect(() => {
     const fetch = async() =>{
@@ -15,7 +18,14 @@ function MysteryPartyGamePage(){
       const result = await axios('http://localhost:8080/gamenight/server/data');
       setLoading(false);
       setData(result.data[1]);
+      console.log(result.data[1]);
+
       setSata(result.data[0]);
+      console.log(result.data[0]);
+
+      setPicd(result.data[2])
+      console.log(result.data[2]);
+
   } catch(error){
     setLoading(false);
     setError('data not retreied');
@@ -33,8 +43,15 @@ const handleClick = (id, e) =>{
       const result = await axios.post('http://localhost:8080/gamenight/server/next', {
         id:id
       });
-        setData(result.data);
+        setData(result.data[0]);
+        console.log(result.data[0]);
+
         setSata(data.filter(item => item.id === id));
+        console.log(data.filter(item => item.id === id));
+
+        setPicd(result.data[1])
+        console.log(result.data[1]);
+
   } catch(error){
     setError('delete failed');
   }
@@ -55,28 +72,32 @@ return(
     </div>
     :
     <div className="row mt-5">
+      
       <h1 className="text-center text-white">
-            MysteryParty
-          </h1>
-          <h2 className="text-center ">
-            {sata.map(({C, R, id}) =>
+        MysteryParty
+      </h1>
+          
+      {sata.map(({C, R, id}) =>
         <div className="col-md-4" key={id}>
           <h5 className="text-left" onClick={e => handleClick(id, e)}>
              <div>{R}</div>
-             <div hidden>{R}</div>
           </h5>
         </div>)}
-          </h2>
+
+      {picd.map(({pic}) =>
+        <div className="col-md-4 text-white">
           <div>
-          <img src="https://i.imgur.com/IFCmBO4l.png" class="center"/>
+            <img src={pic} class="center"/>
           </div>
+        </div>)}
+
       {data.map(({C, R, id}) =>
         <div className="col-md-4 text-white" key={id}>
           <h5 className="text-right" onClick={e => handleClick(id, e)}>
              <div className='text-white'>{C} </div>
-             <div hidden>{R}</div>
           </h5>
         </div>)}
+
     </div>}
   </div>
   );

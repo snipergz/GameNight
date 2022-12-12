@@ -26,9 +26,14 @@ let testdata = [{C:'Go through the red door', R:'You are now in the red room, wh
 			   {C:'Go through the triangle door', R:'You are now in the triangle room, what do you do now?', id:3}, {C:'Go through the squre door', R:'You are now in the square room, what do you do now?', id:4}, {C:'Go through the pentagon door', R:'You are now in the pentagon room, what do you do now?', id:5}, 
 			   {C:'Go through the past door', R:'You are now in the past room, what do you do now?', id:6}, {C:'Go through the present door', R:'You are now in the present room, what do you do now?', id:7}, {C:'Go through the future door', R:'You are now in the future room, what do you do now?', id:8}];
 
-let winset = [{C:'congratulations!', R:'', id:997}, {C:'You win!', R:'', id:998}, {C:'Have fun?', R:'', id:999}];
 
-let loseset = [{C:'Sorry!', R:'', id:997}, {C:'You Died!', R:'', id:998}, {C:'It was the wrong door', R:'', id:999}];
+
+let picset = [{pic:'https://i.imgur.com/GSLliJZl.png'}, {pic:'https://i.imgur.com/93ELDRCl.png'}, {pic:'https://i.imgur.com/pp69oevl.png'}, {pic:'https://i.imgur.com/awhX0S7l.png'}, {pic:'https://i.imgur.com/iGIsjM2l.png'}, {pic:'https://i.imgur.com/8dYkYn6l.png'}, {pic:'https://i.imgur.com/x22wMvjl.png'}, {pic:'https://i.imgur.com/zPN5F4Kl.png'}, {pic:'https://i.imgur.com/IFCmBO4l.png'}];
+let curpic = 0;
+
+let winset = [[{C:'congratulations!', R:'', id:997}, {C:'You win!', R:'', id:998}, {C:'Have fun?', R:'', id:999}], [picset[curpic]] ];
+
+let loseset = [[{C:'Sorry!', R:'', id:997}, {C:'You Died!', R:'', id:998}, {C:'It was the wrong door', R:'', id:999}], [picset[curpic]] ];
 //////
 
 //General Functions
@@ -238,10 +243,16 @@ const deleteServer = asyncHandler(async (req, res) => {
 // @route   get /gamenight/server/data
 // @access  Public
 const testinitdata = asyncHandler(async (req, res) => {
-	let result = [[testdef], [testdata[thisset], testdata[thisset+1], testdata[thisset+2]]];
+	let result = [ [testdef], [testdata[thisset], testdata[thisset+1], testdata[thisset+2]], [picset[curpic]] ];
 	thisset+=3;
+    curpic+=1;
+    
 	if(thisset == 9)
 		thisset = 0;
+
+    if(curpic == 9)
+        curpic = 0;
+
 	res.json(result);
 })
 
@@ -249,17 +260,27 @@ const testinitdata = asyncHandler(async (req, res) => {
 // @route   post /gamenight/server/next
 // @access  Public
 const testnextdata = asyncHandler(async (req, res) => {
-	let result = [testdata[thisset], testdata[thisset+1], testdata[thisset+2]];
+	let result = [ [testdata[thisset], testdata[thisset+1], testdata[thisset+2]], [picset[curpic]] ];
 	thisset+=3;
+    curpic+=1;
+    turn+=1;
+
 	if(thisset == 9)
 		thisset = 0;
-	turn+=1;
+    
 	if((req.body.id == 2) |(req.body.id == 5) | (req.body.id == 8)){
 		result = loseset;
 		thisset = 0}
+
 	if(turn == 3){
 		result = winset;
-		thisset = 0;}
+		thisset = 0;
+        turn = 0;}
+
+    if(curpic == 9)
+        curpic = 0;
+
+
 	res.json(result);
 })
 
