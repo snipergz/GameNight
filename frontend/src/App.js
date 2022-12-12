@@ -1,14 +1,19 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { socket, SocketContext } from "../src/context/socket";
 import Home from "./pages/Home";
+
 import Mafia from "./pages/Mafia";
 import MafiaGame from "./pages/MafiaGame";
 import MafiaLobby from "./pages/MafiaLobby";
 import MafiaServer from "./pages/MafiaServer";
+
 import Mystery from "./pages/Mystery";
+import MysteryPlay from './pages/MysteryPlay';
 import MysteryGame from "./pages/MysteryGame";
 import MysteryServer from "./pages/MysteryServer";
+
 import Taboo from "./pages/Taboo";
+
 function App() {
   return (
     <>
