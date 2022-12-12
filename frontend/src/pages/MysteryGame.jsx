@@ -1,6 +1,6 @@
 import React from 'react'
 import Choice from '../components/Mystery/MysteryGameChoice'
-import Room from "../assets/Mystery/r.png";
+import Room from "../assets/MurderMystery/game3.png";
 import Navbar from '../components/Navbar';
 import { Link } from 'react-router-dom';
 

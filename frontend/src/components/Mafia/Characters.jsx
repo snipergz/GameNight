@@ -2,6 +2,8 @@ import React from "react";
 import detectiveCard1 from "../../assets/Mafia/detective-card-1.jpg";
 import doctorCard1 from "../../assets/Mafia/doctor-card-1.jpg";
 import mafiaCard2 from "../../assets/Mafia/mafia-card-2.jpg";
+import civillian from "../../assets/Mafia/civillian-card.jpg"
+import moderator from "../../assets/Mafia/moderator.jpg"
 
 const Characters = () => {
   return (
@@ -28,7 +30,7 @@ const Characters = () => {
             <h3 className="text-2xl">Doctor</h3>
             <p className="mb-4">
               The Doctor has the ability to either protect themselves or any
-              other player once per turn
+              other player once per turn but can only save themself once in a game.
             </p>
           </div>
         </div>
@@ -44,24 +46,23 @@ const Characters = () => {
           </div>
         </div>
         <div className="flex flex-col rounded-lg shadow-lg bg-white max-w-sm">
-          <img src={doctorCard1} alt="" />
+          <img src={moderator} alt="" />
           <div className="p-4">
-            <h3 className="text-2xl">Doctor</h3>
+            <h3 className="text-2xl">Moderator</h3>
             <p className="mb-4">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis,
-              voluptatibus nemo iste quia delectus tenetur expedita atque
-              deleniti placeat animi nulla sint veniam quisquam magnam.
+              As the Moderator, your role is to guide, moderate, and create the storyline of the game 
+              ensuring that the rules are kept and the stories made are fun.
             </p>
           </div>
         </div>
         <div className="flex flex-col rounded-lg shadow-lg bg-white max-w-sm">
-          <img src={detectiveCard1} alt="" />
+          <img src={civillian} alt="" />
           <div className="p-4">
-            <h3 className="text-2xl">Detective</h3>
+            <h3 className="text-2xl">Civillian</h3>
             <p className="mb-4">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis,
-              voluptatibus nemo iste quia delectus tenetur expedita atque
-              deleniti placeat animi nulla sint veniam quisquam magnam.
+              As a Civillian, your goal is to voice your opinions on who you suspect the Mafia is
+              and vote with your community to get rid of them, but make sure to do so wisely or 
+              you may make a crucial mistake.
             </p>
           </div>
         </div>
