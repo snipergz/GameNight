@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import mafiaCard1 from "../../assets/Mafia/mafia-card-1.jpg";
+import mafiaHouse from "../../assets/Mafia/mafia-house.jpg";
 import taboo from "../../assets/Taboo/r.png"
 import mystery from "../../assets/MurderMystery/game3.png"
 
@@ -10,7 +10,7 @@ const Games = () => {
       <h1 className="text-4xl p-2 text-center text-white">Featured Games:</h1>
       <div className="grid justify-center md:grid-cols-3 max-w-[1240px] m-auto text-dark md:p-2 gap-8 sm:gap-2 ">
         <div className="flex flex-col rounded-lg shadow-lg bg-white max-w-sm">
-          <img src={mafiaCard1} alt="" />
+          <img src={mafiaHouse} alt="" />
           <div className="p-4">
             <h3 className="text-2xl">Mafia</h3>
             <p className="mb-4">
