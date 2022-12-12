@@ -11,6 +11,11 @@ const io = require('socket.io')(8000, {
         origin: ['http://localhost:3000']
     }
 })
+import path from 'path';
+import fs from 'fs';
+import React from 'react';
+import ReactDOMServer from 'react-dom/server';
+import Home from '../frontend/src/pages/Home';
 
 const mafiaGameServer = require('../backend/models/MafiaServerModel')
 
@@ -104,6 +109,22 @@ app.use(express.urlencoded({extended: false}))
 app.use(cors())
 
 app.use('/gamenight/server', require('./routes/MafiaRoutes'), require('./routes/MurderMysteryRoutes'))
+
+app.get('/', (req, res) => {
+    const home = ReactDOMServer.renderToString(<Home />);
+    const indexFile = path.resolve('/index.html');
+  
+    fs.readFile(indexFile, 'utf8', (err, data) => {
+      if (err) {
+        console.error('Something went wrong:', err);
+        return res.status(500).send('Oops, better luck next time!');
+      }
+  
+      return res.send(
+        data.replace('<div id="root"></div>', `<div id="root">${home}</div>`)
+      );
+    });
+});
 
 // Start up the server
 console.log("Javascript running on the server");
