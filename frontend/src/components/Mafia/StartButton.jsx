@@ -71,7 +71,7 @@ const StartButton = ({player, players}) => {
       :
       clickStart
       ?
-      <div onClick={handleStartClick} className="bg-mafiaRed absolute bottom-0 left-0 right-0 text-white py-3 px-6 md:w-[50%] w-full border border-navy rounded">Not Ready</div> 
+      <div onClick={handleStartClick} className="bg-mafiaRed absolute bottom-0 left-0 right-0 text-white py-3 px-6 md:w-[50%] m-auto w-full border border-navy rounded">Not Ready</div> 
       : 
       <div onClick={handleStartClick} className="bg-[#269754] absolute bottom-0 left-0 right-0 color-white py-3 px-6 md:w-[50%] m-auto w-full border border-navy rounded">I'm Ready</div>
       }

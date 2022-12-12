@@ -7,6 +7,7 @@ import detectiveCard1 from "../assets/Mafia/detective-card-1.jpg";
 import doctorCard1 from "../assets/Mafia/doctor-card-1.jpg";
 import mafiaCard2 from "../assets/Mafia/mafia-card-2.jpg";
 import civillianCard from '../assets/Mafia/civillian-card.jpg'
+import axios from 'axios';
 
 /* 
   MAJOR PROBLEMS BEACUSE THE GAME IS NOT STORED IN SESSION
@@ -15,6 +16,20 @@ import civillianCard from '../assets/Mafia/civillian-card.jpg'
   - You can't refresh the page
   - 
 */
+function shuffleArray(array) {
+  let curId = array.length;
+  // There remain elements to shuffle
+  while (0 !== curId) {
+    // Pick a remaining element
+    let randId = Math.floor(Math.random() * curId);
+    curId -= 1;
+    // Swap it with the current element.
+    let tmp = array[curId];
+    array[curId] = array[randId];
+    array[randId] = tmp;
+  }
+  return array;
+}
 
 const MafiaLobby = () => {
   // WebSocket Initialization
@@ -98,15 +113,14 @@ const MafiaLobby = () => {
   })
 
   // Moderater has pressed ready and game will begin
-  socket.on("receive-mafia-moderator-ready", (gameServer, player) => {
+  socket.once("receive-mafia-moderator-ready", (gameServer, player) => {
     try {
-      console.log("RECEIVE_MAFIA_PLAYER_UPDATE")
+      console.log("RECEIVE_MODERATOR_PLAYER_UPDATE")
       const receivedServer = JSON.parse(gameServer)
       const receivedPlayer = JSON.parse(player)
       setServer(receivedServer)
       setPlayers(receivedServer.players)
       setLoading(false)
-      setPlayer(receivedPlayer)
       if(sessionPlayer.name === "Moderator"){
         setPlayer(receivedPlayer)
       }
@@ -117,67 +131,48 @@ const MafiaLobby = () => {
       const playersLength = players.length
 
       // Based off of 7 players (Including Moderator)
-      let maxMafiaCount = 1
-      let maxDoctorCount = 1
-      let maxDetectiveCount = 1
-      let maxCivillianCount = 3
+      let roles = ["Mafia", "Civillian", "Doctor", "Civillian", "Detective", "Civillian"]
 
       if(playersLength === 8 || playersLength === 9){
-        maxMafiaCount = 2
-        maxCivillianCount = 4
+        roles.append("Mafia")
+        roles.append("Civillian")
       }
 
       if(playersLength >= 10 && playersLength <= 12){
-        maxMafiaCount = 2
-        maxDoctorCount = 2
-        maxDetectiveCount = 2
-        maxCivillianCount = 4
+        roles.append("Mafia")
+        roles.append("Doctor")
+        roles.append("Detective")
+        roles.append("Civillian")
       }
-
-      const roles = ["Mafia", "Doctor", "Detective", "Civillian"]
 
       // Assign roles to the players
-      for(let i = 1; i < playersLength; i++){
-        let random = Math.floor(Math.random() * roles.length)
-        let role = roles[random]
-        console.log(`Random Role Chosen: ${role}`)
-        console.log(`Remaining Mafia: ${maxMafiaCount}, Doctor: ${maxDoctorCount}, Detective: ${maxDetectiveCount}, Civillian: ${maxCivillianCount}`)
-
-        if(role === "Mafia"){
-          players[i].role = "Mafia"
-          maxMafiaCount -= 1
-          if(maxMafiaCount === 0){
-            roles.splice(random, 1)
-          }
-        } else if(role === "Doctor"){
-          players[i].role = "Doctor"
-          maxDoctorCount -=1
-          if(maxDoctorCount === 0){
-            roles.splice(random, 1)
-          }
-        } else if(role === "Detective"){
-          players[i].role = "Detective"
-          maxDetectiveCount -= 1
-          if(maxDetectiveCount === 0){
-            roles.splice(random, 1)
-          }
-        } else {
-          players[i].role = "Civillian"
-          maxCivillianCount -= 1
-          if(maxCivillianCount === 0){
-            roles.splice(random, 1)
-          }
-        }      
-      }
+      const shuffledRoles = shuffleArray(roles)
       
-      console.log(players)
+      if(players.length >= 7){
+        socket.emit("receive-shuffle-roles", shuffledRoles, player, players)
+      }
+      // sessionStorage.setItem('players', JSON.stringify(server.players))
 
-      sessionStorage.setItem('players', JSON.stringify(players))
-
-      // navigate('/mafia/server/play')
     } catch (error) {
       setError(error)
     }
+  })
+
+  socket.once("shuffle-complete-start-game", (gameServer, players) => {
+    console.log("Starting the game.......")
+    const receivedServer = JSON.parse(gameServer)
+    const receivedPlayers = JSON.parse(players)
+    sessionStorage.setItem('server', JSON.stringify(receivedServer))
+    sessionStorage.setItem('players', JSON.stringify(receivedPlayers))
+
+    for(let player of receivedPlayers){
+      if(currentPlayer.name === player.name){
+        sessionStorage.setItem('player', JSON.stringify(player))
+      }
+    }
+
+    navigate('/mafia/server/play')
+    
   })
 
   useEffect(() => {

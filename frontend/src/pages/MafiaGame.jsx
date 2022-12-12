@@ -2,10 +2,10 @@ import React, {useContext} from 'react'
 import { SocketContext } from '../context/socket'
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
-import civillianCard from '../assets/Mafia/civillian-card.jpg'
-import detectiveCard1 from "../assets/Mafia/detective-card-1.jpg";
-import doctorCard1 from "../assets/Mafia/doctor-card-1.jpg";
-import mafiaCard2 from "../assets/Mafia/mafia-card-2.jpg";
+import Civillian from '../assets/Mafia/civillian-card.jpg'
+import Detective from "../assets/Mafia/detective-card-1.jpg";
+import Doctor from "../assets/Mafia/doctor-card-1.jpg";
+import Mafia from "../assets/Mafia/mafia-card-2.jpg";
 
 function MafiaGame() {
   // WebSocket Initialization
@@ -34,14 +34,25 @@ function MafiaGame() {
             ?
             <div>
               <h2 className='text-3xl mb-4'>Role: Moderator</h2> 
-              <div className='grid grid-cols-3 gap-4 p-4'>
-                {sessionPlayers.map(p => {
-                  return <img key={p.playerID} alt="moderator card" src={civillianCard} className="m-auto"/>
+              <div className='grid grid-cols-2 sm:grid-cols-3 gap-4 p-4'>
+                {sessionPlayers.filter(plr => plr.name !== "Moderator").map(p => {
+                  return <img key={p.playerID} alt="player's role card" src={p.role === "Mafia" ? Mafia
+                                                                      :  p.role === "Doctor" ? Doctor
+                                                                      :  p.role === "Detective" ? Detective
+                                                                      : Civillian} 
+                                                                    className="m-auto"/>
                 })}
               </div>
             </div>
             :
-            <div>You are {sessionPlayer.role}</div>
+            <div>
+              <h2 className='text-3xl mb-4'>Role: {sessionPlayer.role}</h2>
+              <img className='w-full h-auto' src={sessionPlayer.role === "Mafia" ? Mafia 
+                                                : sessionPlayer.role === "Doctor" ? Doctor 
+                                                : sessionPlayer.role === "Detective" ? Detective 
+                                                : Civillian} 
+                                              alt="User's Player Card" />
+            </div>
           }
         </div>
       </div>
