@@ -5,7 +5,7 @@ import Taboo from './pages/Taboo';
 import Mystery from "./pages/Mystery";
 import MafiaServer from './pages/MafiaServer';
 
-import Mystery from './pages/MysteryGame';
+//import Mystery from './pages/MysteryGame';
 import MysteryPlay from './pages/MysteryPlay';
 import MafiaLobby from './pages/MafiaLobby';
 import {SocketContext, socket} from '../src/context/socket';
