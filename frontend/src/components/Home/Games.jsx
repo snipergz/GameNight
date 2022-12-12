@@ -12,9 +12,9 @@ const Games = () => {
           <div className="p-4">
             <h3 className="text-2xl">Mafia</h3>
             <p className="mb-4">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis,
-              voluptatibus nemo iste quia delectus tenetur expedita atque
-              deleniti placeat animi nulla sint veniam quisquam magnam.
+              Who's a friend and who's a foe? Get a group of 7 or more and use your wits to figure out
+              which members of your group are actually the mafia! Every round is a fierce debate and
+              every game is filled with tense moments with fingers pointed every which way!
             </p>
             <Link
               className="block bg-darkPurple text-white py-3 px-6 w-[50%] text-center mx-auto border border-navy rounded"
@@ -29,9 +29,8 @@ const Games = () => {
           <div className="p-4">
             <h3 className="text-2xl">Taboo</h3>
             <p className="mb-4">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis,
-              voluptatibus nemo iste quia delectus tenetur expedita atque
-              deleniti placeat animi nulla sint veniam quisquam magnam.
+              Get together 2 teams and go head to head to see who can give the best clues! Each team 
+              takes rounds trying to figure out secret words, but watch out for words that are taboo! 
             </p>
             <Link
               className="block bg-darkPurple text-white py-3 px-6 w-[50%] text-center mx-auto border border-navy rounded"
@@ -46,9 +45,9 @@ const Games = () => {
           <div className="p-4">
             <h3 className="text-2xl">Mystery</h3>
             <p className="mb-4">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis,
-              voluptatibus nemo iste quia delectus tenetur expedita atque
-              deleniti placeat animi nulla sint veniam quisquam magnam.
+              Will you be able to make it all the way and survive? This choose your own adventure game
+              is sure to keep you on the edge of your seat! You'll come across plenty of paths that force 
+              you to choose where you'll go. Choose right and you make it out. Choose wrong and it's game over!
             </p>
             <Link
               className="block bg-darkPurple text-white py-3 px-6 w-[50%] text-center mx-auto border border-navy rounded"
