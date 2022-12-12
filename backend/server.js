@@ -107,4 +107,7 @@ app.use('/gamenight/server', require('./routes/MafiaRoutes'), require('./routes/
 
 // Start up the server
 console.log("Javascript running on the server");
-app.listen(port, () => console.log(`Server started on port ${port}`));
+app.listen(process.env.port, function () {  //Updated
+    var addr = app.address();
+    console.log('app listening on http://' + addr.address + ':' + addr.port);
+  });
