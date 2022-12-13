@@ -1,6 +1,7 @@
 //import './App.css';
 import { useState, useEffect} from 'react';
 import axios from 'axios';
+import Navbar from '../components/Navbar';
 
 function MysteryPartyGamePage(){
   const [data, setData] = useState([]);
@@ -61,6 +62,8 @@ next();
 
 
 return(
+  <>
+  <Navbar/>
   <div className="container text-white max-w-[1024px] m-auto text-center">
     {loading
     ?
@@ -97,7 +100,9 @@ return(
 
     </div>}
   </div>
+  </>
   );
+  
 }
 
 export default MysteryPartyGamePage;
