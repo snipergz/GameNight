@@ -72,7 +72,7 @@ return(
     </div>
     :
     <div className="mt-8 p-4">
-      <h1 className="text-center text-5xl lg:text-6xl font-navFontRS text-mysteryYellow ">MysteryParty</h1>
+      <h1 className="text-center text-5xl lg:text-6xl font-navFontRS text-mysteryYellow ">Murder Mystery</h1>
           
       {sata.map(({C, R, id}) =>
         <div className="mt-8 mb-4" key={id}>

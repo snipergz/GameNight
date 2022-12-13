@@ -10,7 +10,7 @@ function Mystery() {
       <Navbar />
       <Hero
         pic={mysteryPic}
-        title={"Mystery"}
+        title={"Murder Mystery"}
         titleColor={"text-mysteryYellow"}
         btnColor={"bg-mysteryYellow"}
         btnOutline={"outline-mysteryYellow"}
