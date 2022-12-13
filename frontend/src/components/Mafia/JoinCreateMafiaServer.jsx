@@ -84,12 +84,12 @@ const JoinCreateMafiaServer = ({gameName}) => {
               <>
                 <button
                   onClick={createGame}
-                  className="bg-mafiaRed text-white sm:py-2 lg:py-3 px-6 min-w-[145px] border border-navy rounded hover:cursor-pointer "
+                  className="bg-mafiaRed text-white py-2 lg:py-3 px-6 min-w-[145px] border border-navy rounded hover:cursor-pointer "
                 >
                   Create a {gameName} Server
                 </button>
                 <button
-                  className="bg-white text-mafiaRed sm:py-2 lg:py-3 px-6 min-w-[145px] border border-mafiaRed rounded hover:cursor-pointer"
+                  className="bg-white text-mafiaRed py-2 lg:py-3 px-6 min-w-[145px] border border-mafiaRed rounded hover:cursor-pointer"
                   onClick={handleJoinClick}
                 >
                   Join a {gameName} Server

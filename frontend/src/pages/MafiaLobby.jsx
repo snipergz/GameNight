@@ -207,7 +207,7 @@ const MafiaLobby = () => {
           :           
             <div className='relative h-screen'>
               <p className='text-center'>Your Server Code is: {server.serverCode}</p>
-              <p>
+              <p className='p-4'>
                 In order to start the game, there must be atleast 7 players in total and a maximum of 12 
                 in the lobby with everyone being ready. Once everyone is ready, the moderator can start the game.
               </p>
