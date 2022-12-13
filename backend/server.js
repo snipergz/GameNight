@@ -106,5 +106,5 @@ app.use(cors())
 app.use('/gamenight/server', require('./routes/MafiaRoutes'), require('./routes/MurderMysteryRoutes'))
 
 // Start up the server
-console.log("Javascript running on the server");
+// console.log("Javascript running on the server");
 app.listen(port, () => console.log(`Server started on port ${port}`));

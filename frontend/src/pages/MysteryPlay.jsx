@@ -1,5 +1,6 @@
 import { useState, useEffect} from 'react';
 import axios from 'axios';
+import Navbar from '../components/Navbar';
 
 function MysteryPartyGamePage(){
   const [data, setData] = useState([]);
@@ -50,7 +51,9 @@ next();
 };
 
 return(
-  <div className="container text-white">
+  <>
+  <Navbar/>
+  <div className="container text-white max-w-[1024px] m-auto text-center">
     {loading
     ?
     <h2>Loading</h2>
@@ -60,23 +63,22 @@ return(
       <pre>{error}</pre>
     </div>
     :
-    <div className="row mt-5">
-      
-      <h1 className="text-center text-white">
-        MysteryParty
-      </h1>
+    <div className="mt-8 p-4">
+      <h1 className="text-center text-5xl lg:text-6xl font-navFontRS text-mysteryYellow ">Murder Mystery</h1>
           
+
       {sata.map(({C, R, id, type}) =>
         <div className="col-md-4" key={id}>
           <h5 className="text-left" onClick={e => handleClick(id, type, e)}>
+
              <div>{R}</div>
           </h5>
         </div>)}
 
       {picd.map(({pic}) =>
-        <div className="col-md-4 text-white">
+        <div className="mb-4">
           <div>
-            <img src={pic} class="center"/>
+            <img src={pic} className="m-auto"/>
           </div>
         </div>)}
 
@@ -89,7 +91,9 @@ return(
 
     </div>}
   </div>
+  </>
   );
+  
 }
 
 export default MysteryPartyGamePage;
