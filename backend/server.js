@@ -98,13 +98,18 @@ io.on("connection", socket => {
 // express and middleware setup
 const app = express();
 
-app.use(express.static(static_dir));
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 app.use(cors())
 
 app.use('/gamenight/server', require('./routes/MafiaRoutes'), require('./routes/MurderMysteryRoutes'))
 
+// Step 1:
+app.use(express.static(path.resolve(__dirname, "../frontend/build")));
+// Step 2:
+app.get("*", function (request, response) {
+  response.sendFile(path.resolve(__dirname, "../frontend/build", "index.html"));
+});
 // Start up the server
 // console.log("Javascript running on the server");
 app.listen(port, () => console.log(`Server started on port ${port}`));
