@@ -6,8 +6,9 @@
   "scripts": {
     "start": "node backend/server.js",
     "server": "nodemon backend/server.js ",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install npm && run build"
+    "build": "webpack"
   },
+  "heroku-run-build-script": true,
   "author": "",
   "license": "ISC",
   "dependencies": {
