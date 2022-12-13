@@ -25,18 +25,3 @@ const MysteryGame = () => {
   }
 
 export default MysteryGame;
-
-/*
-{
-    return (
-        <whole>
-        <Navbar/>
-        <div>
-            <img src={Room} alt="Room Image"/>
-            <Link className='hold' to='/MysteryPlay'>Play Mystery Party</Link>
-        </div>
-        <Choice/>
-        </whole>
-    );
-}
-*/

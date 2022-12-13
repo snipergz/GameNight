@@ -13,27 +13,47 @@ const cor = [{o:'the first option', r:'the first result'}, {o:'the second option
 let updateint = 0
 
 //////
+let sentset = [];
 let turn = 0;
 let thisset = 0;
 let def = {C:'choice', R:'result', id:20};
 let testdef = {C:'choice', R:'You and several others wake up in what appears to be a mansion. what do you do?', id:20};
 
-let thedata = [{C:'C0', R:'R0', id:0}, {C:'C1', R:'R1', id:1}, {C:'C2', R:'R2', id:2}, 
-			   {C:'C3', R:'R3', id:3}, {C:'C4', R:'R4', id:4}, {C:'C5', R:'R5', id:5}, 
-			   {C:'C6', R:'R6', id:6}, {C:'C7', R:'R7', id:7}, {C:'C8', R:'R8', id:8}];
+let testdata = [{C:'Go through the red door', R:'You are now in the red room, what do you do now?', id:0, type:'C'}, 
+                {C:'Go through the blue door', R:'You are now in the blue room, what do you do now?', id:1, type:'E'}, 
+                {C:'Go through the green door', R:'You are now in the green room, what do you do now?', id:2, type:'I'}, 
 
-let testdata = [{C:'Go through the red door', R:'You are now in the red room, what do you do now?', id:0}, {C:'Go through the blue door', R:'You are now in the blue room, what do you do now?', id:1}, {C:'Go through the green door', R:'You are now in the green room, what do you do now?', id:2}, 
-			   {C:'Go through the triangle door', R:'You are now in the triangle room, what do you do now?', id:3}, {C:'Go through the squre door', R:'You are now in the square room, what do you do now?', id:4}, {C:'Go through the pentagon door', R:'You are now in the pentagon room, what do you do now?', id:5}, 
-			   {C:'Go through the past door', R:'You are now in the past room, what do you do now?', id:6}, {C:'Go through the present door', R:'You are now in the present room, what do you do now?', id:7}, {C:'Go through the future door', R:'You are now in the future room, what do you do now?', id:8}];
+                {C:'Go through the triangle door', R:'You are now in the triangle room, what do you do now?', id:3, type:'C'}, 
+                {C:'Go through the squre door', R:'You are now in the square room, what do you do now?', id:4, type:'E'}, 
+                {C:'Go through the pentagon door', R:'You are now in the pentagon room, what do you do now?', id:5, type:'I'}, 
+
+                {C:'Go through the past door', R:'You are now in the past room, what do you do now?', id:6, type:'C'}, 
+                {C:'Go through the present door', R:'You are now in the present room, what do you do now?', id:7, type:'E'}, 
+                {C:'Go through the future door', R:'You are now in the future room, what do you do now?', id:8, type:'I'}];
 
 
 
-let picset = [{pic:'https://i.imgur.com/GSLliJZl.png'}, {pic:'https://i.imgur.com/93ELDRCl.png'}, {pic:'https://i.imgur.com/pp69oevl.png'}, {pic:'https://i.imgur.com/awhX0S7l.png'}, {pic:'https://i.imgur.com/iGIsjM2l.png'}, {pic:'https://i.imgur.com/8dYkYn6l.png'}, {pic:'https://i.imgur.com/x22wMvjl.png'}, {pic:'https://i.imgur.com/zPN5F4Kl.png'}, {pic:'https://i.imgur.com/IFCmBO4l.png'}];
+let picset = [{pic:'https://i.imgur.com/PJ0E27X.png'}, 
+              {pic:'https://i.imgur.com/IFCmBO4.png'}, 
+              {pic:'https://i.imgur.com/iS2CZcC.png'}, 
+              {pic:'https://i.imgur.com/iGIsjM2.png'}, 
+              {pic:'https://i.imgur.com/fD3Op1g.png'}, 
+              {pic:'https://i.imgur.com/sLUKDfv.png'}, 
+              {pic:'https://i.imgur.com/awhX0S7.png'}, 
+              {pic:'https://i.imgur.com/8gnbwIN.png'}, 
+              {pic:'https://i.imgur.com/PBEVTsI.png'},
+              {pic:'https://i.imgur.com/XM7bGyT.png'}];
+
 let curpic = 0;
 
 let winset = [[{C:'congratulations!', R:'', id:997}, {C:'You win!', R:'', id:998}, {C:'Have fun?', R:'', id:999}], [picset[curpic]] ];
 
 let loseset = [[{C:'Sorry!', R:'', id:997}, {C:'You Died!', R:'', id:998}, {C:'It was the wrong door', R:'', id:999}], [picset[curpic]] ];
+
+let finalCorrectSet = ['A', 'B', 'C', 'D', 'E'];
+let finalExpositorySet = ['1', '2', '3', '4', '5'];
+let finalIncorrectSet = ['<', '>', '?', '!', '#'];
+let finalMixedGameSet = [];
 //////
 
 //General Functions
@@ -58,6 +78,16 @@ function generatePlayerID(){
 function chooseRooms(){
     //Randomly Chooses a room and removes from the pool of room choices
     return Math.floor(Math.random() % 3);
+}
+
+function shuffle(arr){
+    //Shuffles an input array arr
+    for(let i = arr.length - 1; i > 0; i--){
+		let j = Math.floor(Math.random() * (i + 1));
+		let temp = arr[i];
+		arr[i] = arr[j];
+		arr[j] = temp;
+    }
 }
 
 //MurderMystery Player CRUD METHODS
@@ -260,9 +290,10 @@ const testinitdata = asyncHandler(async (req, res) => {
 // @route   post /gamenight/server/next
 // @access  Public
 const testnextdata = asyncHandler(async (req, res) => {
+
 	let result = [ [testdata[thisset], testdata[thisset+1], testdata[thisset+2]], [picset[curpic]] ];
 	thisset+=3;
-    curpic+=1;
+    
     turn+=1;
 
 	if(thisset == 9)
@@ -280,10 +311,36 @@ const testnextdata = asyncHandler(async (req, res) => {
     if(curpic == 9)
         curpic = 0;
 
+    curpic+=1;
+
 
 	res.json(result);
 })
 
+// @desc    shuffle data for MP
+// @route   post /gamenight/server/shuffle
+// @access  Public
+const testshuffledata = asyncHandler(async (req, res) => {
+
+	let full  = [];
+
+	shuffle(finalCorrectSet);
+	shuffle(finalExpositorySet);
+	shuffle(finalIncorrectSet);
+
+	for(let i = finalCorrectSet.length - 1; i >= 0; i--){
+		let arr = [finalCorrectSet[i], finalExpositorySet[i], finalIncorrectSet[i]];
+		shuffle(arr);
+		arr.forEach(element => {
+			full.push(element);
+		});
+	}
+
+    finalMixedGameSet = full;
+    console.log(full)
+	res.json(full);
+});
+
 module.exports = {
-    getServer, createServer, updateServer, deleteServer, getPlayer, createPlayer, deletePlayer, updatePlayer, testinitdata, testnextdata
+    getServer, createServer, updateServer, deleteServer, getPlayer, createPlayer, deletePlayer, updatePlayer, testinitdata, testnextdata, testshuffledata
 } 

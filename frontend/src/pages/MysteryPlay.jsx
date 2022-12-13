@@ -1,4 +1,3 @@
-//import './App.css';
 import { useState, useEffect} from 'react';
 import axios from 'axios';
 
@@ -9,8 +8,6 @@ function MysteryPartyGamePage(){
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  let pics = [];
-
   useEffect(() => {
     const fetch = async() =>{
     try{
@@ -18,47 +15,39 @@ function MysteryPartyGamePage(){
       const result = await axios('http://localhost:8080/gamenight/server/data');
       setLoading(false);
       setData(result.data[1]);
-      console.log(result.data[1]);
-
       setSata(result.data[0]);
-      console.log(result.data[0]);
-
       setPicd(result.data[2])
-      console.log(result.data[2]);
-
   } catch(error){
     setLoading(false);
-    setError('data not retreied');
+    setError('data failed');
   }
 };
 fetch();
 
 }, []);
 
-const handleClick = (id, e) =>{
+const handleClick = (id, type, e) =>{
   console.log('you clicked', id);
   const next = async() =>{
     try{
-      console.log('sending ajax del post');
+
+    if(type == 'E'){
+        setData(data.filter(item => item.type === 'C'));
+        setSata(data.filter(item => item.type === 'E'));
+    } else{
       const result = await axios.post('http://localhost:8080/gamenight/server/next', {
         id:id
       });
         setData(result.data[0]);
-        console.log(result.data[0]);
-
         setSata(data.filter(item => item.id === id));
-        console.log(data.filter(item => item.id === id));
-
         setPicd(result.data[1])
-        console.log(result.data[1]);
-
+    }
   } catch(error){
-    setError('delete failed');
+    setError('next failed');
   }
 };
 next();
 };
-
 
 return(
   <div className="container text-white">
@@ -77,9 +66,9 @@ return(
         MysteryParty
       </h1>
           
-      {sata.map(({C, R, id}) =>
+      {sata.map(({C, R, id, type}) =>
         <div className="col-md-4" key={id}>
-          <h5 className="text-left" onClick={e => handleClick(id, e)}>
+          <h5 className="text-left" onClick={e => handleClick(id, type, e)}>
              <div>{R}</div>
           </h5>
         </div>)}
@@ -91,10 +80,10 @@ return(
           </div>
         </div>)}
 
-      {data.map(({C, R, id}) =>
+      {data.map(({C, R, id, type}) =>
         <div className="col-md-4 text-white" key={id}>
-          <h5 className="text-right" onClick={e => handleClick(id, e)}>
-             <div className='text-white'>{C} </div>
+          <h5 className="text-right" onClick={e => handleClick(id, type, e)}>
+             <div className='text-white'>{C}</div>
           </h5>
         </div>)}
 
