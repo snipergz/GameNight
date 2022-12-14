@@ -1,8 +1,8 @@
 import axios from "axios";
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import mafiaHouse from "../../assets/Mafia/mafia-house.jpg";
 import JoinForm from "./JoinForm";
+require("dotenv").config()
 
 const MafiaServerComponent = ({ gameName }) => {
   const [clickJoinServer, setJoin] = useState(false);
@@ -15,7 +15,7 @@ const MafiaServerComponent = ({ gameName }) => {
       try {
         console.log("Creating Mafia Game Server...");
         const gameServer = await axios.post(
-          "http://localhost:8080/gamenight/server/mafia",
+          `https://gamenight-project.herokuapp.com:${process.env.PORT}/gamenight/server/mafia`,
           { game: "Mafia" }
         );
         console.log("Storing server to localStorage...");

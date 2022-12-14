@@ -1,14 +1,14 @@
 const express = require('express');
 const dotenv = require('dotenv').config();
 const path = require('path');
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 443;
 const static_dir = path.join(__dirname, 'static');
 const connectDB = require('./config/db')
 const cors = require('cors');
-const io = require('socket.io')(8000, {
+const io = require('socket.io')(process.env.PORT, {
     'reconnection': true,
     cors: {
-        origin: ['https://gamenight-project.herokuapp.com:3000']
+        origin: [`https://gamenight-project.herokuapp.com:${process.env.PORT}`]
     }
 })
 

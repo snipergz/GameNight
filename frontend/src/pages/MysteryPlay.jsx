@@ -1,6 +1,8 @@
 import { useState, useEffect} from 'react';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
+require("dotenv").config()
+
 
 function MysteryPartyGamePage(){
   const [data, setData] = useState([]);
@@ -13,7 +15,7 @@ function MysteryPartyGamePage(){
     const fetch = async() =>{
     try{
       setLoading(true);
-      const result = await axios('http://localhost:8080/gamenight/server/data');
+      const result = await axios(`https://gamenight-project.herokuapp.com:${process.env.PORT}/gamenight/server/data`);
       setLoading(false);
       setData(result.data[1]);
       setSata(result.data[0]);
@@ -32,11 +34,11 @@ const handleClick = (id, type, e) =>{
   const next = async() =>{
     try{
 
-    if(type == 'E'){
+    if(type === 'E'){
         setData(data.filter(item => item.type === 'C'));
         setSata(data.filter(item => item.type === 'E'));
     } else{
-      const result = await axios.post('http://localhost:8080/gamenight/server/next', {
+      const result = await axios.post(`https://gamenight-project.herokuapp.com:${process.env.PORT}/gamenight/server/next`, {
         id:id,
         type:type
       });

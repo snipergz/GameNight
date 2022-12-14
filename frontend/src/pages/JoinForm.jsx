@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SocketContext } from "../context/socket";
+require("dotenv").config()
 
 const JoinForm = ({ handleJoinClick }) => {
   // WebSocket Initialization
@@ -25,14 +26,14 @@ const JoinForm = ({ handleJoinClick }) => {
       try {
         console.log("...sending ajax create player post");
         const player = await axios.post(
-          `http://localhost:8080/gamenight/server/mystery/player/${serverCode}`,
+          `https://gamenight-project.herokuapp.com:${process.env.PORT}/gamenight/server/mystery/player/${serverCode}`,
           {
             name: playerName,
           }
         );
         if (player.data.status === "OK") {
           const server = await axios.get(
-            `http://localhost:8080/gamenight/server/mystery/${serverCode}`
+            `https://gamenight-project.herokuapp.com:${process.env.PORT}/gamenight/server/mystery/${serverCode}`
           );
 
           sessionStorage.setItem("player", JSON.stringify(player.data.player));

@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SocketContext } from "../../context/socket";
+require("dotenv").config()
 
 const JoinForm = ({ handleJoinClick }) => {
   // WebSocket Initialization
@@ -10,11 +11,7 @@ const JoinForm = ({ handleJoinClick }) => {
   // console.log(`Active: ${socket.active}`)
 
   const navigate = useNavigate();
-
-  const sessionServer = JSON.parse(sessionStorage.getItem("server"));
-  const sessionPlayers = JSON.parse(sessionStorage.getItem("players"));
-  const sessionPlayer = JSON.parse(sessionStorage.getItem("player"));
-
+  
   const joinGame = (e) => {
     e.preventDefault();
     const playerName = e.target[0].value;
@@ -25,14 +22,14 @@ const JoinForm = ({ handleJoinClick }) => {
       try {
         console.log("...sending ajax create player post");
         const player = await axios.post(
-          `http://localhost:8080/gamenight/server/mafia/player/${serverCode}`,
+          `https://gamenight-project.herokuapp.com:${process.env.PORT}/gamenight/server/mafia/player/${serverCode}`,
           {
             name: playerName,
           }
         );
         if (player.data.status === "OK") {
           const server = await axios.get(
-            `http://localhost:8080/gamenight/server/mafia/${serverCode}`
+            `https://gamenight-project.herokuapp.com:${process.env.PORT}/gamenight/server/mafia/${serverCode}`
           );
 
           sessionStorage.setItem("player", JSON.stringify(player.data.player));

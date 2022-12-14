@@ -1,7 +1,7 @@
 import {useState, useContext} from 'react'
 import axios from 'axios';
 import { SocketContext } from '../../context/socket';
-
+require("dotenv").config()
 
 const StartButton = ({player, players}) => {
     // WebSocket Initialization
@@ -18,11 +18,11 @@ const StartButton = ({player, players}) => {
       console.log(player)
 
       // Update the Player's Status to True/False (Ready / Not Ready)
-      const playerResult = await axios.patch(`http://localhost:8080/gamenight/server/mafia/player/${player.serverCode}/${player.playerID}`, {
+      const playerResult = await axios.patch(`https://gamenight-project.herokuapp.com:${process.env.PORT}/gamenight/server/mafia/player/${player.serverCode}/${player.playerID}`, {
         status: !player.status
       })
       // Get the Updated Server Object with updated player
-      const server = await axios.get(`http://localhost:8080/gamenight/server/mafia/${player.serverCode}`)
+      const server = await axios.get(`https://gamenight-project.herokuapp.com:${process.env.PORT}/gamenight/server/mafia/${player.serverCode}`)
       
       // Store it into sessionStorage
       sessionStorage.setItem('player', JSON.stringify(playerResult.data.player))

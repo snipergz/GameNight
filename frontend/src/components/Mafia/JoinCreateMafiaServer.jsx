@@ -4,7 +4,7 @@ import mafiaHouse from '../../assets/Mafia/mafia-house.jpg'
 import JoinForm from './JoinForm';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
+require("dotenv").config()
 
 const JoinCreateMafiaServer = ({gameName}) => {
   const [clickJoinServer, setJoin] = useState(false);
@@ -28,13 +28,13 @@ const JoinCreateMafiaServer = ({gameName}) => {
         try{
           console.log("Socket is Active...")
           console.log("Creating New Mafia Game Server...")
-          let gameServer = await axios.post('http://localhost:8080/gamenight/server/mafia', {game: 'Mafia'})
+          let gameServer = await axios.post(`https://gamenight-project.herokuapp.com:${process.env.PORT}/gamenight/server/mafia`, {game: 'Mafia'})
           console.log("Game Server Successfully Created...")
           console.log("Sending ajax create player Post Request...");
-          const player = await axios.post(`http://localhost:8080/gamenight/server/mafia/player/${gameServer.data.serverCode}`,{
+          const player = await axios.post(`https://gamenight-project.herokuapp.com:${process.env.PORT}/gamenight/server/mafia/player/${gameServer.data.serverCode}`,{
             name: "Moderator",
           });
-          gameServer = await axios.get(`http://localhost:8080/gamenight/server/mafia/${gameServer.data.serverCode}`)
+          gameServer = await axios.get(`https://gamenight-project.herokuapp.com:${process.env.PORT}/gamenight/server/mafia/${gameServer.data.serverCode}`)
 
           if(player.data.status === 'OK'){
             console.log("Moderator Player Successfully Created...")
