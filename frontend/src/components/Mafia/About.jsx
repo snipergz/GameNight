@@ -9,7 +9,7 @@ const About = () => {
             <div className='order-2 xl:order-1 flex flex-col justify-center items-center xl:items-start w-full px-2 py-2 mb-5 sm:m-none'>
                 <p className='text-xl lg:text-2xl'>
                     Mafia is a strategic game best played by 8 people including a moderator but needs a minimum of 
-                    6. There are two main goals to the game. To the mafia, the goal of the game is to eliminate the
+                    7. There are two main goals to the game. To the mafia, the goal of the game is to eliminate the
                     other players such that the mafia outnumber the citizens. The mafia does this by choosing a player
                     to execute during every round. As for the citizens, their goal is to eliminate the mafia by voting 
                     them out and assist their community through the help of the doctor who can vote to grant a citizen

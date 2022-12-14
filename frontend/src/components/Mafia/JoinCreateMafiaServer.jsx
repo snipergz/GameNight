@@ -4,7 +4,6 @@ import mafiaHouse from '../../assets/Mafia/mafia-house.jpg'
 import JoinForm from './JoinForm';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-require("dotenv").config()
 
 const JoinCreateMafiaServer = ({gameName}) => {
   const [clickJoinServer, setJoin] = useState(false);

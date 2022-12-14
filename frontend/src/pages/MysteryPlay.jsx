@@ -1,8 +1,6 @@
 import { useState, useEffect} from 'react';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
-require("dotenv").config()
-
 
 function MysteryPartyGamePage(){
   const [data, setData] = useState([]);

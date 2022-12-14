@@ -2,7 +2,6 @@ import axios from "axios";
 import { useState } from "react";
 import mafiaHouse from "../../assets/Mafia/mafia-house.jpg";
 import JoinForm from "./JoinForm";
-require("dotenv").config()
 
 const MafiaServerComponent = ({ gameName }) => {
   const [clickJoinServer, setJoin] = useState(false);

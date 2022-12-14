@@ -1,7 +1,6 @@
 import {useState, useContext} from 'react'
 import axios from 'axios';
 import { SocketContext } from '../../context/socket';
-require("dotenv").config()
 
 const StartButton = ({player, players}) => {
     // WebSocket Initialization

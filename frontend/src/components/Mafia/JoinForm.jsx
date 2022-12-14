@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SocketContext } from "../../context/socket";
-require("dotenv").config()
 
 const JoinForm = ({ handleJoinClick }) => {
   // WebSocket Initialization
@@ -11,7 +10,7 @@ const JoinForm = ({ handleJoinClick }) => {
   // console.log(`Active: ${socket.active}`)
 
   const navigate = useNavigate();
-  
+
   const joinGame = (e) => {
     e.preventDefault();
     const playerName = e.target[0].value;

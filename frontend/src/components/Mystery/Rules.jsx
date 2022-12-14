@@ -8,7 +8,7 @@ const Rules = () => {
   const handleClick = (e) =>{
     const shuf = async() =>{
       try{
-        const result = await axios.post('http://localhost:8080/gamenight/server/shuffle', {});
+        const result = await axios.post(`https://gamenight-project.herokuapp.com:${process.env.PORT}/gamenight/server/shuffle`, {});
         let shufflebuttontext = 'Shuffled!';
       } catch(error){
           console.log('shuffle failed');

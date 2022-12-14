@@ -3,19 +3,7 @@ import {useState, useContext} from 'react'
 import StartButton from '../components/Mafia/StartButton';
 import { SocketContext } from '../context/socket'
 import { useNavigate } from 'react-router-dom';
-import detectiveCard1 from "../assets/Mafia/detective-card-1.jpg";
-import doctorCard1 from "../assets/Mafia/doctor-card-1.jpg";
-import mafiaCard2 from "../assets/Mafia/mafia-card-2.jpg";
-import civillianCard from '../assets/Mafia/civillian-card.jpg'
-import axios from 'axios';
 
-/* 
-  MAJOR PROBLEMS BEACUSE THE GAME IS NOT STORED IN SESSION
-
-  - You can't get unready
-  - You can't refresh the page
-  - 
-*/
 function shuffleArray(array) {
   let curId = array.length;
   // There remain elements to shuffle
