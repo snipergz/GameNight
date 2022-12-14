@@ -9,29 +9,10 @@ const firstchoice = [{o:'the red door', r:'On the otherside, you see that both d
 
 const lastchoice = [{o:'go down the corridor', r:'You make a break for the corridor as the room fills up. It is long and make various turn though you reach the ends to find that there is no exit. It is too late to go back now. The water is too deep to wade or swim through fast enough. You drown.'}, {o:'garbage chute', r:'You enter the garbage chute and try to slide down though you can feel water pouring down just as you make it to the bottom. You see the reverse silhouette of a door as lit by light from the other side. You rush through it to see a dock leading to a small boat. You sprint through the dock, start the boat, and escape the island and mansion.'}]
 
-const cor = [{o:'the first option', r:'the first result'}, {o:'the second option', r:'the second result'}, {o:'the third option', r:'the third result'}]
 let updateint = 0
 
-//////
-let sentset = [];
 let turn = 0;
 let thisset = 0;
-let def = {C:'choice', R:'result', id:20};
-let testdef = {C:'choice', R:'You and several others wake up in what appears to be a mansion. what do you do?', id:20};
-
-let testdata = [{C:'Go through the red door', R:'You are now in the red room, what do you do now?', id:0, type:'C'}, 
-                {C:'Go through the blue door', R:'You are now in the blue room, what do you do now?', id:1, type:'E'}, 
-                {C:'Go through the green door', R:'You are now in the green room, what do you do now?', id:2, type:'I'}, 
-
-                {C:'Go through the triangle door', R:'You are now in the triangle room, what do you do now?', id:3, type:'C'}, 
-                {C:'Go through the squre door', R:'You are now in the square room, what do you do now?', id:4, type:'E'}, 
-                {C:'Go through the pentagon door', R:'You are now in the pentagon room, what do you do now?', id:5, type:'I'}, 
-
-                {C:'Go through the past door', R:'You are now in the past room, what do you do now?', id:6, type:'C'}, 
-                {C:'Go through the present door', R:'You are now in the present room, what do you do now?', id:7, type:'E'}, 
-                {C:'Go through the future door', R:'You are now in the future room, what do you do now?', id:8, type:'I'}];
-
-
 
 let picset = [{pic:'https://i.imgur.com/PJ0E27X.png'}, 
               {pic:'https://i.imgur.com/IFCmBO4.png'}, 
@@ -46,13 +27,179 @@ let picset = [{pic:'https://i.imgur.com/PJ0E27X.png'},
 
 let curpic = 0;
 
+let placeholderset = {C:'choice', R:'You and several others wake up in what appears to be a mansion. what do you do?', id:997};
+
+let finalgenset = [];
+
+let finalfirstset = [
+    {
+        C:'Go through the Red door', 
+        R:'You pass through the door with the group. On the other side you find that next to the door you\'ve gone through, is also the Blue door. There was no real choice to have been made. The room you have entered is large and open. What do you do?', 
+        id:0,
+        type:'C'
+    },
+    {
+        C:'Go through the Blue door', 
+        R:'You pass through the door with the group. On the other side you find that next to the door you\'ve gone through, is also the Red door. There was no real choice to have been made. The room you have entered is large and open. What do you do?', 
+        id:1,
+        type:'C'
+    }
+    ];
+
+let finallastset = [
+    {
+        C:'Escape through the garbage chute', 
+        R:'You enter the garbage chute and try to slide down and make it to the bottom. You see the reverse silhouette of a door as lit by light from the other side. You rush through it to see a dock leading to a small boat. You sprint through the dock, start the boat, and escape the island and mansion.', 
+        id:23,
+        type:'C'
+    },
+    {
+        C:'Go down the corridor', 
+        R:'You make a break for the corridor as the room fills with gas. It is long and make various turn though you reach the end to find that there is no exit. It is too late to go back now. The water is too deep to wade or swim through fast enough. You drown.', 
+        id:24,
+        type:'I'
+    }
+    ];
+
+let finalCorrectSet = [
+    {
+        C:'Go up the staris.', 
+        R:'As you reach the upper floor you are greeted by a well lit hallway filled with doors. Most doors are locked and unable to be opened.', 
+        id:2,
+        type:'C'
+    },
+    {
+        C:'Take the first right door', 
+        R:'You open the door. You enter a clearing surrounded by tall continuous building. The wall is too tall to climb. There trees, grass, tables, and benches. What do you do?', 
+        id:5,
+        type:'C'
+    },
+    {
+        C:'Go through the door', 
+        R:'You pass through the door and enter a room with a pool at its center. As you close the door behind you, you see the pools water level begin to rise and pass the edge, beginning to flood the room. You search the room for an exit, but the door behind you.', 
+        id:8,
+        type:'C'
+    },
+    {
+        C:'Go through the vent', 
+        R:'You make it up to the vent and crawl through it and fall into the next room. It is kitchen like and water begins to follow through the vent. You look around only to and find few options available. With the room filling with water, what do you do?', 
+        id:11,
+        type:'C'
+    },
+    {
+        C:'Go back out from where you entered', 
+        R:'You walk back out to find that teh romm you came from is now completly different. You have new options to choose from now. What do you do?', 
+        id:14,
+        type:'C'
+    },
+    {
+        C:'You go through the hole in the wall', 
+        R:'Crawling your way through you find yourself somewhere new.', 
+        id:17,
+        type:'C'
+    },
+    {
+        C:'You go through the door with an angel marking', 
+        R:'Entering the door, nothing odd seems to happen and you are led into a new room.', 
+        id:20,
+        type:'C'
+    }
+    ];
+
+let finalExpositorySet = [
+    {
+        C:'Explore the room', 
+        R:'You find a lottery ticket, a soccer ball, and a shoe in various parts of the room. The lottery ticket is smeared and faded but you can make out the date: 1980. The shoe is worn and has clearly seen better days. The size is difficult to make out, but it is clear this was a child\'s shoe. The Soccer ball is tattered and deflated as if it were drenched in water and dried several times. With nothing else to investigate, you decide to go up the stairs.', 
+        id:3,
+        type:'E'
+    },
+    {
+        C:'Take the left door', 
+        R:'Entering into the dimly lit room, you explore for a short time before finding a manifest that indicates the transportation of a dangerous animal on board a ship.', 
+        id:6,
+        type:'E'
+    },
+    {
+        C:'Climb the ladder', 
+        R:'You go up the ladder to the hole. You hear a roar and the clanging of the a cage. A lion reveals itself to be held within what you thought was an empty cage. The creature begins to put its weight against the rusted metal bars and they bend ever so slightly outwards. Inspecting the hole leads you to find that it is actually simply painted on, and so you jump off the ladder and make your way to the door on the other side.', 
+        id:9,
+        type:'E'
+    },
+    {
+        C:'Kick a whole in the wall', 
+        R:'You kick a whole in the wall. Realizing your leg went through, you start peeling back more drywall to see if you can brute force an escape. You keep peeling off more and more wall revealing and foot of empty space followed by a large steal panel connecting to others at all corners. You go back the way you came', 
+        id:12,
+        type:'E'
+    },
+    {
+        C:'Try going through the smaller door', 
+        R:'It is a bathroom. You check out the mirror and find that passes the space test and is therefore a two way mirror. you break it but find only a wall behind it. You leave back to the room you came from.', 
+        id:15,
+        type:'E'
+    },
+    {
+        C:'You crawl through a nearby vent', 
+        R:'The vent does not lead to any other openings, but does reveal several rooms identical to the one you came from. Eventually you find an opening and move to another room.', 
+        id:18,
+        type:'E'
+    },
+    {
+        C:'Go down the spiral slide', 
+        R:'Upon reaching the bottom of the slide you fall onto a trampoline. You bounce for a few hours and eventully bounce back up onto the slide and head back up. ', 
+        id:21,
+        type:'E'
+    }
+    ];
+
+let finalIncorrectSet = [
+    {
+        C:'Go down the stairs.', 
+        R:'You descend into another, completely empty room, and as soon as everyone enters, the stairs retract into the wall before shutting the group out in complete darkness. There are no means by which you can escape this room and thus all lose.', 
+        id:4,
+        type:'I'
+    },
+    {
+        C:'Take the second right door', 
+        R:'You open the door and begin to search the featureless room. Soon after, the door slams shut and becomes locked from the other side. Each member of the group begins to pass out one by one as you realize the vents have been flooded with gas until you slowly begin to fade out of consciousness. Death soon takes you.', 
+        id:7,
+        type:'I'
+    },
+    {
+        C:'Open the gate', 
+        R:'Upon opening the gate, you are met by a swift strike from a lion\'s paw as the feline jumps out from a hiding place. It is clear now that the gate lead to a lion enclosure that was kept behind the gate to protect you.', 
+        id:10,
+        type:'I'
+    },
+    {
+        C:'Search for another way out', 
+        R:'You try to break through the wall. As you chip away at the drywall, you start pulling at large peices. As you reach in deeper, you get hooked on a live wire and can\'t let go as you geet electrocuted. Should\'ve worn gloves.', 
+        id:13,
+        type:'I'
+    },
+    {
+        C:'Try jumping out the window', 
+        R:'As you try to raise raise the windows open, it does not lift. You try breaking it and it cracks revealing that it is just a screen. As the screen chnges to a camera view of the room your in, you hear machnaical noies and the room feals as though it is falling. The room hits the ground at terminal velocity smashing it and you.', 
+        id:16,
+        type:'I'
+    },
+    {
+        C:'You go through the door with a skull marking', 
+        R:'As you enter the room, poison floods in and you are unable to escape it.', 
+        id:19,
+        type:'I'
+    },
+    {
+        C:'You crawl through a crawl space with dandelyon surrounding it', 
+        R:'Shortly after entering the space you are met with a mysterious gas that causes you to cough uncontrollably. Eventually you begin to cough up blood and realize too late that you have been poisoned.', 
+        id:22,
+        type:'I'
+    }
+    ];
+
 let winset = [[{C:'congratulations!', R:'', id:997}, {C:'You win!', R:'', id:998}, {C:'Have fun?', R:'', id:999}], [picset[curpic]] ];
 
 let loseset = [[{C:'Sorry!', R:'', id:997}, {C:'You Died!', R:'', id:998}, {C:'It was the wrong door', R:'', id:999}], [picset[curpic]] ];
 
-let finalCorrectSet = ['A', 'B', 'C', 'D', 'E'];
-let finalExpositorySet = ['1', '2', '3', '4', '5'];
-let finalIncorrectSet = ['<', '>', '?', '!', '#'];
 let finalMixedGameSet = [];
 //////
 
@@ -273,7 +420,9 @@ const deleteServer = asyncHandler(async (req, res) => {
 // @route   get /gamenight/server/data
 // @access  Public
 const testinitdata = asyncHandler(async (req, res) => {
-	let result = [ [testdef], [testdata[thisset], testdata[thisset+1], testdata[thisset+2]], [picset[curpic]] ];
+    
+    let result = [ [placeholderset], finalfirstset, [picset[curpic]] ];
+
 	thisset+=3;
     curpic+=1;
     
@@ -291,29 +440,35 @@ const testinitdata = asyncHandler(async (req, res) => {
 // @access  Public
 const testnextdata = asyncHandler(async (req, res) => {
 
-	let result = [ [testdata[thisset], testdata[thisset+1], testdata[thisset+2]], [picset[curpic]] ];
+    let result = [ [finalgenset[thisset], finalgenset[thisset+1], finalgenset[thisset+2]], [picset[curpic]] ];
+    console.log(result);
 	thisset+=3;
     
     turn+=1;
 
+    if(turn == 4)
+        result = [finallastset, [picset[curpic]]];
+
 	if(thisset == 9)
 		thisset = 0;
     
-	if((req.body.id == 2) |(req.body.id == 5) | (req.body.id == 8)){
-		result = loseset;
-		thisset = 0}
+    if((req.body.type == 'I')){
+        result = loseset;
+        thisset = 0
+        turn = 0;}
 
-	if(turn == 3){
-		result = winset;
+	if(turn == 5){//win after 5 choices
+		//let result = finallastset;
+        result = winset
 		thisset = 0;
         turn = 0;}
 
-    if(curpic == 9)
+    if(curpic == 8)
         curpic = 0;
 
     curpic+=1;
 
-
+    console.log(result)
 	res.json(result);
 })
 
@@ -321,8 +476,6 @@ const testnextdata = asyncHandler(async (req, res) => {
 // @route   post /gamenight/server/shuffle
 // @access  Public
 const testshuffledata = asyncHandler(async (req, res) => {
-
-	let full  = [];
 
 	shuffle(finalCorrectSet);
 	shuffle(finalExpositorySet);
@@ -332,13 +485,11 @@ const testshuffledata = asyncHandler(async (req, res) => {
 		let arr = [finalCorrectSet[i], finalExpositorySet[i], finalIncorrectSet[i]];
 		shuffle(arr);
 		arr.forEach(element => {
-			full.push(element);
+			finalgenset.push(element);
 		});
 	}
-
-    finalMixedGameSet = full;
-    console.log(full)
-	res.json(full);
+    //console.log(finalgenset)
+	res.json(finalgenset);
 });
 
 module.exports = {
