@@ -104,6 +104,12 @@ app.use(cors())
 
 app.use(express.static(path.join(__dirname, '/gamenight/server')), require('./routes/MafiaRoutes'), require('./routes/MurderMysteryRoutes'))
 
+// Step 1:
+app.use(express.static(path.resolve(__dirname, "../frontend/build")));
+// Step 2:
+app.get("*", function (request, response) {
+  response.sendFile(path.resolve(__dirname, "../frontend/build", "index.html"));
+});
 // Start up the server
 // console.log("Javascript running on the server");
 app.listen(port, () => console.log(`Server started on port ${port}`));
