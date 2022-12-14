@@ -37,7 +37,8 @@ const handleClick = (id, type, e) =>{
         setSata(data.filter(item => item.type === 'E'));
     } else{
       const result = await axios.post('http://localhost:8080/gamenight/server/next', {
-        id:id
+        id:id,
+        type:type
       });
         setData(result.data[0]);
         setSata(data.filter(item => item.id === id));
@@ -68,9 +69,8 @@ return(
           
 
       {sata.map(({C, R, id, type}) =>
-        <div className="col-md-4" key={id}>
-          <h5 className="text-left" onClick={e => handleClick(id, type, e)}>
-
+        <div className="mt-8 mb-4" key={id}>
+          <h5 className="text-center" onClick={e => handleClick(id, type, e)}>
              <div>{R}</div>
           </h5>
         </div>)}
@@ -78,13 +78,13 @@ return(
       {picd.map(({pic}) =>
         <div className="mb-4">
           <div>
-            <img src={pic} className="m-auto"/>
+            <img src={pic} className="m-auto w-[500px] h-auto"/>
           </div>
         </div>)}
 
       {data.map(({C, R, id, type}) =>
-        <div className="col-md-4 text-white" key={id}>
-          <h5 className="text-right" onClick={e => handleClick(id, type, e)}>
+        <div className="w-full p-4 bg-mysteryYellow mb-4 max-w-[650px] m-auto" key={id}>
+          <h5 className="text-center" onClick={e => handleClick(id, type, e)}>
              <div className='text-white'>{C}</div>
           </h5>
         </div>)}
