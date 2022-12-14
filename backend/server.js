@@ -8,7 +8,7 @@ const cors = require('cors');
 const io = require('socket.io')(8000, {
     'reconnection': true,
     cors: {
-        origin: ['https://gamenight-project.herokuapp.com:3000']
+        origin: ['http://localhost:3000']
     }
 })
 
