@@ -69,9 +69,8 @@ return(
           
 
       {sata.map(({C, R, id, type}) =>
-        <div className="col-md-4" key={id}>
+        <div className="mt-8 mb-4" key={id}>
           <h5 className="text-left" onClick={e => handleClick(id, type, e)}>
-
              <div>{R}</div>
           </h5>
         </div>)}
@@ -84,8 +83,8 @@ return(
         </div>)}
 
       {data.map(({C, R, id, type}) =>
-        <div className="col-md-4 text-white" key={id}>
-          <h5 className="text-right" onClick={e => handleClick(id, type, e)}>
+        <div className="w-full p-4 bg-mysteryYellow mb-4 max-w-[650px] m-auto" key={id}>
+          <h5 className="text-center" onClick={e => handleClick(id, type, e)}>
              <div className='text-white'>{C}</div>
           </h5>
         </div>)}
