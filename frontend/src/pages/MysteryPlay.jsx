@@ -37,7 +37,8 @@ const handleClick = (id, type, e) =>{
         setSata(data.filter(item => item.type === 'E'));
     } else{
       const result = await axios.post('http://localhost:8080/gamenight/server/next', {
-        id:id
+        id:id,
+        type:type
       });
         setData(result.data[0]);
         setSata(data.filter(item => item.id === id));
